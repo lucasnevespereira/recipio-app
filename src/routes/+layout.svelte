@@ -16,7 +16,6 @@
         drawerStore
     } from '@skeletonlabs/skeleton';
     import Navigation from '$lib/components/Navigation.svelte';
-    import {goto} from "$app/navigation";
 
     function drawerOpen(): void {
         drawerStore.open();
