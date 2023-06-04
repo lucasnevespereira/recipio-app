@@ -1,8 +1,13 @@
 <script lang="ts">
     import {FileDropzone, InputChip} from '@skeletonlabs/skeleton';
 
-    let recipeImages: FileList;
+    let files: FileList;
     let ingredientsList: string[] = [];
+    let previewFile
+
+    function onFileUpload(e: Event): void {
+        console.log('file data:', e);
+    }
 </script>
 
 <form>
@@ -20,13 +25,20 @@
 
             <label class="label mb-3">
                 <span>Image</span>
-                <FileDropzone name="recipeImages"/>
+                <FileDropzone bind:files on:change={onFileUpload}>
+                    <svelte:fragment slot="message">Upload a <b>recipe image</b></svelte:fragment>
+                </FileDropzone>
+                {#if files && files[0].name}
+                <span class="preview">
+                    {files[0].name}
+                </span>
+                {/if}
             </label>
         </div>
         <div class="right">
             <label class="label mb-3">
                 <span>Ingredients</span>
-                <InputChip bind:value={ingredientsList} name="ingredients" placeholder="Enter recipe ingredients..." />
+                <InputChip bind:value={ingredientsList} name="ingredients" placeholder="Enter recipe ingredients..."/>
             </label>
         </div>
     </div>
