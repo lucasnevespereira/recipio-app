@@ -1,7 +1,7 @@
 <script lang="ts">
     import {FileDropzone, InputChip, toastStore} from '@skeletonlabs/skeleton';
     import RichEditor from "$lib/components/RichEditor/RichEditor.svelte"
-    import {error} from "@sveltejs/kit";
+    import {error, redirect} from "@sveltejs/kit";
     import {pb, currentUser, login} from "$lib/pocketbase";
     import type {ToastSettings} from '@skeletonlabs/skeleton';
 
@@ -36,7 +36,7 @@
             formData.append("user_id", $currentUser.id)
         }
         formData.append("title", title)
-        formData.append("description", title)
+        formData.append("description", description)
         formData.append("instructions", instructions)
 
         const recipeIngredients = {}
@@ -66,7 +66,7 @@
 
         toast("Recipe Created")
 
-        // throw redirect(303, '/me/recipes')
+        throw redirect(303, '/me/recipes')
     }
 </script>
 
