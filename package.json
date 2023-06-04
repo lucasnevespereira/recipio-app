@@ -36,6 +36,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@tinymce/tinymce-svelte": "^1.0.1"
+		"@tinymce/tinymce-svelte": "^1.0.1",
+		"pocketbase": "^0.15.1"
 	}
 }
