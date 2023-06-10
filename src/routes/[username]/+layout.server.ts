@@ -9,8 +9,17 @@ export const load: LayoutServerLoad = async ({params}) => {
 
     try {
         const res = await pb.collection('users').getFirstListItem(`username="${params.username}"`)
+        const user = res.export()
+        const recipes = structuredClone(await pb.collection("recipes").getFullList({
+            sort: '-created',
+            filter: `user_id = "${user.id}"`
+        }))
+
+        console.log(recipes)
+
         return {
-            user: res.export()
+            user: user,
+            recipes: recipes
         }
     } catch (e) {
         console.error(e)

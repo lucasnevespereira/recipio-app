@@ -1,10 +1,10 @@
 <script lang="ts">
-    import {ArrowLeft, Icon, Pencil} from 'svelte-hero-icons'
     import {getImageURL} from "$lib/utils/image";
     import {invalidateAll} from "$app/navigation";
     import {applyAction, enhance} from "$app/forms";
     import {Avatar} from "@skeletonlabs/skeleton";
     import Preview from "$lib/components/Preview.svelte";
+    import {ArrowLeft, ArrowUpRight, Icon} from "svelte-hero-icons";
 
     export let data;
     export let form;
@@ -46,7 +46,13 @@
                 class="flex flex-col space-y-4 w-full"
                 use:enhance={submitUpdateProfile}
         >
-            <h3 class="text-2xl font-medium">Update Profile</h3>
+            <div class="flex">
+                <h3 class="text-2xl font-medium">Update Profile</h3>
+                <a href={`/${data.user.username}`} target="_blank" class="btn variant-ghost-secondary btn-sm w-50 ml-3">
+                    <span>Your Page</span>
+                    <span><Icon src={ArrowUpRight} class="w-4 h-4" /></span>
+                </a>
+            </div>
             <div class="form-control w-full max-w-lg">
                 <label for="avatar" class="avatar w-32 rounded-full hover:cursor-pointer">
                         <Avatar
@@ -84,7 +90,10 @@
         </form>
     </div>
     <div class="flex flex-row w-1/2 mx-auto">
-        <Preview user={data?.user} />
+        <div class="flex flex-col">
+            <Preview user={data?.user} />
+        </div>
+
     </div>
 </div>
 

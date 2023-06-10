@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { FileDropzone, InputChip } from '@skeletonlabs/skeleton';
 	import RichEditor from '$lib/components/RichEditor/RichEditor.svelte';
-	import { error, redirect } from '@sveltejs/kit';
+	import { error } from '@sveltejs/kit';
 	import { pb, currentUser } from '$lib/pocketbase';
 	import {sendToast} from "$lib/utils/toast";
+	import {slugify} from "$lib/utils/text";
 
 	let files: FileList;
 	let title = '';
@@ -21,6 +22,7 @@
 		formData.append('title', title);
 		formData.append('description', description);
 		formData.append('instructions', instructions);
+		formData.append('slug', slugify(title))
 
 		const recipeIngredients = {};
 		ingredientsList.forEach((element, index) => {
