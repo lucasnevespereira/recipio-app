@@ -3,7 +3,7 @@
     import {getImageURL} from "$lib/utils/image";
     import {sendConfirmModal} from "$lib/utils/modal";
     import {sendToast} from "$lib/utils/toast";
-    import {error, redirect} from "@sveltejs/kit";
+    import {error} from "@sveltejs/kit";
     import {pb} from "$lib/pocketbase";
 
     export let data;

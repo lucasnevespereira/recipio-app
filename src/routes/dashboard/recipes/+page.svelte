@@ -7,7 +7,9 @@
 
 <div class="flex items-center justify-between">
     <h2>
-        <a href="/dashboard/recipes">My Recipes</a>
+        <a href="/dashboard/recipes">
+            <h3 class="h3 font-bold">Recipes</h3>
+        </a>
     </h2>
     <a href="/dashboard/recipes/new" class="btn variant-ghost-primary"> New Recipe </a>
 </div>

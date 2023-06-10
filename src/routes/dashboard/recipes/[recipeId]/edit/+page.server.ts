@@ -7,10 +7,8 @@ export const load: LayoutServerLoad = async ({locals, params}) => {
         throw redirect(303, '/dashboard/recipes')
     }
     const getRecipe = async (recipeId: string) => {
-        console.log("here", recipeId)
         try {
             const recipe = await locals.pb.collection('recipes').getOne(recipeId);
-            console.log("here too", recipe)
             return structuredClone(recipe)
         } catch (e) {
             console.log(e)
