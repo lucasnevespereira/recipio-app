@@ -5,6 +5,7 @@
     import '@skeletonlabs/skeleton/styles/skeleton.css';
     // Most of your app wide CSS should be put in this file
     import '../app.postcss';
+    import {page} from '$app/stores'
     import {
         AppBar,
         AppShell,
@@ -21,6 +22,8 @@
 
     storePopup.set({computePosition, autoUpdate, offset, shift, flip, arrow});
 
+    const {params} = $page;
+    const hasUsername = "username" in params;
 
     export let data
 
@@ -36,11 +39,14 @@
     }
 </script>
 
-<AppShell slotSidebarLeft="w-0 md:w-52 bg-surface-500/10">
-    <svelte:fragment slot="header">
-        <AppBar>
-            <svelte:fragment slot="lead">
-                <button class="md:hidden btn btn-sm mr-4" on:click={drawerOpen}>
+{#if hasUsername}
+    <slot/>
+{:else}
+    <AppShell slotSidebarLeft="w-0 md:w-52 bg-surface-500/10">
+        <svelte:fragment slot="header">
+            <AppBar>
+                <svelte:fragment slot="lead">
+                    <button class="md:hidden btn btn-sm mr-4" on:click={drawerOpen}>
 					<span>
 						<svg viewBox="0 0 100 80" class="fill-token w-4 h-4">
 							<rect width="100" height="20"/>
@@ -48,50 +54,53 @@
 							<rect y="60" width="100" height="20"/>
 						</svg>
 					</span>
-                </button>
-                <a href="/"><strong class="text-xl uppercase">Recipio</strong></a>
-            </svelte:fragment>
-            <svelte:fragment slot="trail">
-                {#if data.user}
-                    <button use:popup={userMenuPopup}>
-                        <Avatar src={getImageURL(data.user?.collectionId, data.user?.id, data.user?.avatar)}
-                                initials={data.user.username} width="w-10" background="bg-primary-500"/>
                     </button>
+                    <a href="/"><strong class="text-xl uppercase">Recipio</strong></a>
+                </svelte:fragment>
+                <svelte:fragment slot="trail">
+                    {#if data.user}
+                        <button use:popup={userMenuPopup}>
+                            <Avatar src={getImageURL(data.user?.collectionId, data.user?.id, data.user?.avatar)}
+                                    initials={data.user.username} width="w-10" background="bg-primary-500"/>
+                        </button>
 
-                    <div class="card w-48 shadow-xl py-2" data-popup="userMenuList">
-                        <div class="list-nav">
-                            <div>
-                                <a href="/dashboard">Dashboard</a>
-                            </div>
-                            <div>
-                                <a href="/dashboard/settings">Settings</a>
-                            </div>
-                            <div>
-                                <form
-                                        method="POST"
-                                        action="/auth/logout"
-                                        use:enhance={() => {
+                        <div class="card w-48 shadow-xl py-2" data-popup="userMenuList">
+                            <div class="list-nav">
+                                <div>
+                                    <a href="/dashboard">Dashboard</a>
+                                </div>
+                                <div>
+                                    <a href="/dashboard/settings">Settings</a>
+                                </div>
+                                <div>
+                                    <form
+                                            method="POST"
+                                            action="/auth/logout"
+                                            use:enhance={() => {
                                            return async ({ result }) => {
                                           pb.authStore.clear()
                                           await applyAction(result)
                                         }
                                         }}>
-                                    <button>Logout</button>
-                                </form>
+                                        <button>Logout</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {:else }
-                    <div class="flex">
-                        <a href="/auth/login" class="btn variant-ghost mr-2">Login</a>
-                        <a href="/auth/signup" class="btn variant-ghost mr-2">Signup</a>
-                    </div>
-                {/if}
-            </svelte:fragment>
-        </AppBar>
-    </svelte:fragment>
+                    {:else }
+                        <div class="flex">
+                            <a href="/auth/login" class="btn variant-ghost mr-2">Login</a>
+                            <a href="/auth/signup" class="btn variant-ghost mr-2">Signup</a>
+                        </div>
+                    {/if}
+                </svelte:fragment>
+            </AppBar>
+        </svelte:fragment>
 
-    <slot/>
-</AppShell>
+        <slot/>
+    </AppShell>
+{/if}
+
+
 
 
