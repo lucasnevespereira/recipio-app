@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {pb, currentUser, login} from "$lib/pocketbase";
+    import {pb, currentUser} from "$lib/pocketbase";
     import {onMount} from "svelte";
     import {Avatar} from "@skeletonlabs/skeleton";
     import {getImageURL} from "$lib/utils/image";
@@ -8,11 +8,6 @@
 
 
     onMount(async () => {
-        try {
-            await login("username", "password")
-        } catch (e) {
-            console.error(e)
-        }
         if ($currentUser) {
             recipes = await pb.collection('recipes').getFullList({
                 sort: '-created',
