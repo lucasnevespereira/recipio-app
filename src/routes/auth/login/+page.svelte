@@ -14,7 +14,7 @@
   }}
 >
     <div class="flex flex-col items-center mb-8">
-        <h1 class="text-2xl text-center">Log in</h1>
+        <h2 class="h2 font-bold text-center">Log in</h2>
         <small class="text-center mt-1">
             Or <a href="/auth/signup" class="text-primary font-medium hover:cursor-pointer hover:underline"
         >sign up</a

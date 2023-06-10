@@ -49,9 +49,17 @@
 
 		sendToast('Recipe Created');
 
-		throw redirect(303, '/me/recipes');
+		throw redirect(303, '/dashboard/recipes');
 	};
 </script>
+
+<div class="flex items-center justify-between">
+	<h2>
+		<a href="/dashboard/recipes">Back to my recipes</a>
+	</h2>
+<!--	<a href="/dashboard/recipes/new" class="btn variant-ghost-primary"> New Recipe </a>-->
+</div>
+
 
 <form>
 	<div class="grid grid-cols-2 gap-6">

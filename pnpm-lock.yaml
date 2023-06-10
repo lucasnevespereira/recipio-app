@@ -11,6 +11,9 @@ dependencies:
   pocketbase:
     specifier: ^0.15.1
     version: 0.15.1
+  svelte-hero-icons:
+    specifier: ^5.0.0
+    version: 5.0.0
 
 devDependencies:
   '@floating-ui/dom':
@@ -414,6 +417,10 @@ packages:
       esm-env: 1.0.0
       svelte: 3.58.0
     dev: true
+
+  /@steeze-ui/heroicons@2.2.2:
+    resolution: {integrity: sha512-VUkgSAbjLzsEuF4kDQDESANb/NNxqhkOMnrzD1VhB3tSGr7wVZ5FKS7aM2QZcKXjziwR6dbt7Nhs3fpZhqOi1A==}
+    dev: false
 
   /@sveltejs/adapter-auto@2.1.0(@sveltejs/kit@1.20.1):
     resolution: {integrity: sha512-o2pZCfATFtA/Gw/BB0Xm7k4EYaekXxaPGER3xGSY3FvzFJGTlJlZjBseaXwYSM94lZ0HniOjTokN3cWaLX6fow==}
@@ -1983,6 +1990,13 @@ packages:
       espree: 9.5.2
       svelte: 3.59.1
     dev: true
+
+  /svelte-hero-icons@5.0.0:
+    resolution: {integrity: sha512-xKMI/Z0f/6831I0R1YKJjVbAw9VBD6XKysvng6LtomlS4n3ZD1lZNAfLrrCmnc1pmiLr/8sVeQA8kgHLQwYlRg==}
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      '@steeze-ui/heroicons': 2.2.2
+    dev: false
 
   /svelte-hmr@0.15.2(svelte@3.59.1):
     resolution: {integrity: sha512-q/bAruCvFLwvNbeE1x3n37TYFb3mTBJ6TrCq6p2CoFbSTNhDE9oAtEfpy+wmc9So8AG0Tja+X0/mJzX9tSfvIg==}

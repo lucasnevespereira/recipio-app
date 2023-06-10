@@ -1,26 +1,19 @@
 <script lang="ts">
-    import {pb, currentUser} from "$lib/pocketbase";
-    import {onMount} from "svelte";
     import {Avatar} from "@skeletonlabs/skeleton";
     import {getImageURL} from "$lib/utils/image";
-
-    let recipes = [];
-
-
-    onMount(async () => {
-        if ($currentUser) {
-            recipes = await pb.collection('recipes').getFullList({
-                sort: '-created',
-                filter: `user_id = "${$currentUser.id}"`
-            });
-        }
-
-        console.log(recipes)
-    });
+    import {goto} from "$app/navigation";
+    export let data;
 </script>
 
-{#each recipes as recipe}
-    <div class="card p-4 flex">
+<div class="flex items-center justify-between">
+    <h2>
+        <a href="/dashboard/recipes">My Recipes</a>
+    </h2>
+    <a href="/dashboard/recipes/new" class="btn variant-ghost-primary"> New Recipe </a>
+</div>
+
+{#each data.recipes as recipe}
+    <div class="card p-4 flex hover:cursor-pointer" on:click={goto(`/dashboard/recipes/${recipe.id}`)}>
         <div class="mr-2">
             <Avatar src={recipe?.photo
 					? getImageURL(recipe.collectionId, recipe.id, recipe.photo, '80x80')
