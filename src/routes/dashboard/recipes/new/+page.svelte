@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { FileDropzone, InputChip, toastStore } from '@skeletonlabs/skeleton';
+	import { FileDropzone, InputChip } from '@skeletonlabs/skeleton';
 	import RichEditor from '$lib/components/RichEditor/RichEditor.svelte';
 	import { error, redirect } from '@sveltejs/kit';
 	import { pb, currentUser } from '$lib/pocketbase';
-	import type { ToastSettings } from '@skeletonlabs/skeleton';
+	import {sendToast} from "$lib/utils/toast";
 
 	let files: FileList;
 	let title = '';
@@ -11,26 +11,9 @@
 	let ingredientsList: string[] = [];
 	let instructions = '';
 
-	const toast = (message: string, type = 'success') => {
-		let toastColor = 'variant-filled-success';
-		if (type == 'warning') {
-			toastColor = 'variant-filled-warning';
-		} else if (type == 'error') {
-			toastColor = 'variant-filled-error';
-		}
 
-		const t: ToastSettings = { message, background: toastColor };
-
-		toastStore.trigger(t);
-	};
 
 	const createRecipe = async () => {
-		// try {
-		//     await login("username", "password")
-		// } catch (e) {
-		//     console.error(e)
-		// }
-
 		let formData = new FormData();
 		if ($currentUser) {
 			formData.append('user_id', $currentUser.id);
@@ -55,7 +38,7 @@
 		try {
 			await pb.collection('recipes').create(formData);
 		} catch (e) {
-			toast('Could not create recipe', 'error');
+			sendToast('Could not create recipe', 'error');
 			console.log(e);
 			if (e.status && e.message) {
 				throw error(e.status, e.message);
@@ -64,7 +47,7 @@
 			}
 		}
 
-		toast('Recipe Created');
+		sendToast('Recipe Created');
 
 		throw redirect(303, '/me/recipes');
 	};

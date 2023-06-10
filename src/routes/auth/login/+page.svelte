@@ -35,6 +35,11 @@
                 placeholder="Password"
                 class="input input-bordered"
         />
+        <div class="w-full max-w-md ml-2">
+            <a href="/auth/reset-password" class="font-light text-sm text-primary hover:cursor-pointer">
+                Forgot Password?
+            </a>
+        </div>
         <div class="w-full flex items-center">
             <button class="btn variant-filled">Log in</button>
         </div>

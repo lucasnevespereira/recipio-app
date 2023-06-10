@@ -55,7 +55,7 @@
                 {#if data.user}
                     <button use:popup={userMenuPopup}>
                         <Avatar src={getImageURL(data.user?.collectionId, data.user?.id, data.user?.avatar)}
-                                initials={data.user.name} width="w-10" background="bg-primary-500"/>
+                                initials={data.user.username} width="w-10" background="bg-primary-500"/>
                     </button>
 
                     <div class="card w-48 shadow-xl py-2" data-popup="userMenuList">
