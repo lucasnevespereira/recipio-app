@@ -29,27 +29,25 @@
 
 		formData.append('ingredients', JSON.stringify(recipeIngredients));
 
-		if (files.item(0)) {
+		if (files && files.item(0)) {
 			formData.append('photo', files.item(0));
 		}
-
-		console.log(formData);
 
 		try {
 			await pb.collection('recipes').create(formData);
 		} catch (e) {
-			sendToast('Could not create recipe', 'error');
 			console.log(e);
 			if (e.status && e.message) {
+				sendToast('Could not create recipe', e.message);
 				throw error(e.status, e.message);
 			} else {
+				sendToast('Could not create recipe', e.toString());
 				throw error(500, e.toString());
 			}
 		}
 
 		sendToast('Recipe Created');
-
-		throw redirect(303, '/dashboard/recipes');
+		window.location.href = "/dashboard/recipes"
 	};
 </script>
 

@@ -1,4 +1,3 @@
-import type {PageServerLoad} from "../../../../../.svelte-kit/types/src/routes/dashboard/recipes/$types";
 import type {LayoutServerLoad} from "../../../../../.svelte-kit/types/src/routes/$types";
 import {redirect} from "@sveltejs/kit";
 

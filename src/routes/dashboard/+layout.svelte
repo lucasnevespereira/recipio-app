@@ -9,7 +9,7 @@
 </script>
 
 
-<Toast position="tr"/>
+<Toast/>
 <Modal/>
 <Drawer>
     <Navigation/>
