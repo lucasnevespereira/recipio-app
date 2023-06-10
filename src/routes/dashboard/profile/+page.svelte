@@ -4,6 +4,7 @@
     import {invalidateAll} from "$app/navigation";
     import {applyAction, enhance} from "$app/forms";
     import {Avatar} from "@skeletonlabs/skeleton";
+    import Preview from "$lib/components/Preview.svelte";
 
     export let data;
     export let form;
@@ -45,17 +46,18 @@
                 class="flex flex-col space-y-4 w-full"
                 use:enhance={submitUpdateProfile}
         >
-            <h3 class="text-2xl font-medium mb-6">Update Profile</h3>
+            <h3 class="text-2xl font-medium">Update Profile</h3>
             <div class="form-control w-full max-w-lg">
-                <label for="name" class="label font-bold mb-2 ml-2">Profile Picture</label>
+                <label for="avatar" class="avatar w-32 rounded-full hover:cursor-pointer">
                         <Avatar
                                 src={data.user?.avatar
 							? getImageURL(data.user?.collectionId, data.user?.id, data.user?.avatar)
 							: `https://ui-avatars.com/api/?name=${data.user?.name}`}
                                 alt="user avatar"
                                 id="avatar-preview"
-                                class="w-32 rounded hover:cursor-pointer"
+                                class="w-32 rounded"
                         />
+                </label>
                 <input
                         type="file"
                         name="avatar"
@@ -69,7 +71,7 @@
             </div>
             <div class="form-control w-full max-w-lg">
                 <label for="name" class="label font-bold mb-2 ml-2">Profile Name</label>
-                <input type="text" class="input input-bordered w-80" placeholder="Profile Name" name="name" value={data?.user?.name} disabled={loading}>
+                <input type="text" class="input input-bordered" placeholder="Profile Name" name="name" value={data?.user?.name} disabled={loading}>
             </div>
             <div class="w-full max-w-lg pt-3">
                 <button class="btn variant-filled" type="submit" disabled={loading}>
@@ -82,7 +84,7 @@
         </form>
     </div>
     <div class="flex flex-row w-1/2 mx-auto">
-        Preview
+        <Preview user={data?.user} />
     </div>
 </div>
 
