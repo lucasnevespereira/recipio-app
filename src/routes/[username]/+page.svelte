@@ -76,14 +76,15 @@
     export let data;
 </script>
 
+
 <div class="grid auto-cols-auto auto-rows-auto gap-4 place-items-center">
     {#each data.recipes as recipe (recipe.id)}
-        <div class="relative hover:cursor-pointer max-w-xs md:max-w-xs lg:max-w-xs"
+        <div class="relative hover:cursor-pointer w-64 sm:max-w-md md:max-w-lg"
              on:click={goto(`/${data.user.username}/${recipe.slug}`)}>
             <img class="w-full h-auto rounded-lg" src={getImageURL(recipe?.collectionId, recipe?.id, recipe.photo)}
                  alt={recipe.title}/>
             <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50 rounded-lg">
-                <p class="text-white text-center text-2xl font-bold">{recipe.title}</p>
+                <p class="text-white text-center text-md md:text-md lg:text-lg font-bold">{recipe.title}</p>
             </div>
         </div>
     {/each}

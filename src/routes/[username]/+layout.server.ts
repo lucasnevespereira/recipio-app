@@ -15,8 +15,6 @@ export const load: LayoutServerLoad = async ({params}) => {
             filter: `user_id = "${user.id}"`
         }))
 
-        console.log(recipes)
-
         return {
             user: user,
             recipes: recipes
