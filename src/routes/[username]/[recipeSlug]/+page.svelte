@@ -13,6 +13,10 @@
                 { property: 'og:description', content: data.recipe.description },
                 { property: 'og:image', content: data.recipe.photo },
                 // Add more Open Graph meta tags as needed
+
+                { property: 'whatsapp:title', content: data.recipe.title },
+                { property: 'whatsapp:description', content: data.recipe.description },
+                { property: 'whatsapp:image', content: data.recipe.photo }
             ];
 
             metaTags.forEach((meta) => {

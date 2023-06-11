@@ -6,10 +6,6 @@
     import { ArrowUpRight, Icon} from "svelte-hero-icons";
 
     export let data;
-
-    // const currentProtocol = window.location.protocol;
-    // const currentHost = window.location.host;
-    const currentUrl = `http://localhost:5173`;
     export let form;
     let loading
     $: loading = false
@@ -36,7 +32,7 @@
                 default:
                     await applyAction(result)
             }
-            refreshIframe(`${currentUrl}/${data.user.username}`)
+            refreshIframe(`${window.location.protocol}//${window.location.host}/${data.user.username}`)
             loading = false
         }
     }
@@ -57,7 +53,7 @@
         >
             <div class="flex">
                 <h3 class="text-2xl font-medium">Update Profile</h3>
-                <a href={`${currentUrl}/${data.user.username}`} target="_blank" class="btn variant-ghost-secondary btn-sm w-50 ml-3">
+                <a href={`${window.location.host}//${window.location.host}/${data.user.username}`} target="_blank" class="btn variant-ghost-secondary btn-sm w-50 ml-3">
                     <span>Your Page</span>
                     <span><Icon src={ArrowUpRight} class="w-4 h-4"/></span>
                 </a>
@@ -103,7 +99,7 @@
     </div>
     <div class="flex flex-row mx-auto pt-10 lg:p-0">
             <iframe title="preview-iframe" id="preview-iframe" class="preview-iframe"
-                    src={`${currentUrl}/${data.user.username}`}
+                    src={`${window.location.protocol}//${window.location.host}/${data.user.username}`}
                     sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
     </div>
 </div>
@@ -120,18 +116,6 @@
         max-height: 664px;
         border: 10px solid black;
         border-radius: 49px;
-        -moz-box-shadow:    inset 0 0 12px #494949;
-        -webkit-box-shadow: inset 0 0 12px #494949;
-        box-shadow:         inset 2px 0 12px #494949;
-    }
-
-
-    .preview-container{
-        display: block;
-        max-width: 319.6px;
-        max-height: 664.4px;
-        background: white;
-        border-radius: 48.6px;
         -moz-box-shadow:    inset 0 0 12px #494949;
         -webkit-box-shadow: inset 0 0 12px #494949;
         box-shadow:         inset 2px 0 12px #494949;
