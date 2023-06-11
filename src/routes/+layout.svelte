@@ -40,7 +40,10 @@
 </script>
 
 {#if hasUsername}
-    <slot/>
+    <AppShell>
+        <slot/>
+    </AppShell>
+
 {:else}
     <AppShell slotSidebarLeft="w-0 md:w-52 bg-surface-500/10">
         <svelte:fragment slot="header">
