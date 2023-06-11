@@ -1,20 +1,49 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
     import {Icon, Share} from 'svelte-hero-icons';
     import {getImageURL} from "$lib/utils/image";
 
     export let data;
 
-    const shareRecipe =  () => {
-        console.log("sharing recipe")
+    // Set Open Graph meta tags dynamically
+    onMount(() => {
+        if (data.recipe) {
+            const metaTags = [
+                { property: 'og:title', content: data.recipe.title },
+                { property: 'og:description', content: data.recipe.description },
+                { property: 'og:image', content: data.recipe.photo },
+                // Add more Open Graph meta tags as needed
+            ];
+
+            metaTags.forEach((meta) => {
+                const tag = document.createElement('meta');
+                tag.setAttribute('property', meta.property);
+                tag.setAttribute('content', meta.content);
+                document.head.appendChild(tag);
+            });
+        }
+    });
+
+    const shareViaWhatsApp = () => {
+        const text = `${window.location.href}`;
+        const encodedText = encodeURIComponent(text);
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedText}`;
+        window.open(whatsappUrl, '_blank');
     };
+
+    // const shareRecipe =  () => {
+    //     console.log("sharing recipe")
+    // };
 </script>
+
 
 {#if data.recipe}
     <div class="max-w-3xl mx-auto p-2 lg:p-8">
-        <div class="flex justify-between items-center mb-4">
+        <div class="flex justify-between items-center flex-col lg:flex-row mb-4">
             <h1 class="text-lg lg:text-xl font-bold">{data.recipe.title}</h1>
-            <button class="hover:cursor-pointer" on:click={shareRecipe}>
-                <Icon src={Share} class="w-6 h-6 mr-2 text-primary-500"/>
+            <button class="hover:cursor-pointer flex items-center text-sm" on:click={shareViaWhatsApp}>
+                <Icon src={Share} class="w-4 h-4 mr-2 text-500"/>
+                Share to WhatsApp
             </button>
 
         </div>

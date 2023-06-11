@@ -1,4 +1,6 @@
 /*place global styles here */
+@import 'tailwindcss/components';
+
 html,
 body {
 	@apply h-full;
@@ -8,4 +10,11 @@ body {
 	font-family: 'Quicksand';
 	src: url('/fonts/Quicksand.ttf');
 	font-display: swap;
+}
+
+@layer components {
+  /* Custom Scrollbar Styles */
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }

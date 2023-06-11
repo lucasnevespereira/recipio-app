@@ -17,7 +17,7 @@
     </a>
     <div class="flex flex-col">
         <span class="text-sm md:text-lg lg:text-2xl font-bold text-center">{user.name}</span>
-        <span class="text-sm md:text-lg lg:text-2xl text-center text-gray-600 mt-0">@{user.username}</span>
+        <small class="text-sm md:text-sm lg:text-md text-center text-gray-600 mt-0">@{user.username}</small>
     </div>
 </div>
 
