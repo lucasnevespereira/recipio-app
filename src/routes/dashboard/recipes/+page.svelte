@@ -11,7 +11,7 @@
             <h3 class="h3 font-bold">Recipes</h3>
         </a>
     </h2>
-    <a href="/dashboard/recipes/new" class="btn variant-ghost-primary"> New Recipe </a>
+    <a href="/dashboard/recipes/new" class="btn variant-ghost"> New Recipe </a>
 </div>
 
 {#each data.recipes as recipe}

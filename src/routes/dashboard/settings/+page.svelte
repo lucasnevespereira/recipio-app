@@ -15,8 +15,10 @@
             switch (result.type) {
                 case 'success':
                     await invalidateAll();
+                    sendToast('Email change request sent! Check your inbox')
                     break;
                 case 'error':
+                    sendToast('Something went wrong', 'error')
                     break;
                 default:
                     await applyAction(result);
@@ -57,31 +59,20 @@
                 disabled
                 class="input input-bordered w-80"
         />
-<!--TODO: uncomment after change email provider max free account reached-->
-<!--        <input-->
-<!--                type="email"-->
-<!--                name="newEmail"-->
-<!--                placeholder="Enter your new email"-->
-<!--                required-->
-<!--                class="input input-bordered"-->
-<!--        />-->
+
+        <input
+                type="email"
+                name="newEmail"
+                placeholder="Enter your new email"
+                required
+                class="input input-bordered w-80"
+        />
 
 
-<!--        <div class="w-full max-w-lg pt-3">-->
-<!--            <button class="btn variant-filled" disabled={loading}>Change my email</button>-->
-<!--        </div>-->
+        <div class="w-full max-w-lg pt-3">
+            <button class="btn variant-filled" disabled={loading}>Change my email</button>
+        </div>
     </form>
-    {#if form?.updateEmailSuccess}
-        <div class="alert variant-filled-success mt-3">
-            <p class="alert-message">Email changed!</p>
-        </div>
-    {/if}
-
-    {#if form?.updateEmailError}
-        <div class="alert variant-filled-error mt-3">
-            <p class="alert-message">Something went wrong</p>
-        </div>
-    {/if}
 </div>
 
 <div class="form-control gap-2 space-y-4 mb-4">

@@ -28,7 +28,7 @@
 
 {#if data.recipe}
     <div class="flex items-center justify-between">
-        <a class="flex items-center" href="/dashboard/recipes">
+        <a class="flex items-center h4" href="/dashboard/recipes">
             <Icon src={ArrowLeft} class="w-4 h-4"/>
             <span class="ml-1">
                 Back to Recipes

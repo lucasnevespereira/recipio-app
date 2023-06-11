@@ -59,11 +59,11 @@
 </script>
 
 <div class="flex items-center justify-between">
-    <h3 class="h3 flex items-center">
+    <h4 class="h4 flex items-center">
         <Icon src={ArrowLeft} class="w-4 h-4"/>
         <a href={`/dashboard/recipes/${data.recipe.id}`}>{data.recipe.title}</a>
-    </h3>
-    <!--	<a href="/dashboard/recipes/new" class="btn variant-ghost-primary"> New Recipe </a>-->
+    </h4>
+    	<button type="button" class="btn variant-ghost-secondary" on:click={updateRecipe}> Save Recipe </button>
 </div>
 
 
@@ -107,12 +107,12 @@
 
             </label>
 
-            <div class="mt-10">
-                <button type="button" on:click={updateRecipe} class="btn variant-filled"
-                >Update Recipe
-                </button
-                >
-            </div>
+<!--            <div class="mt-10">-->
+<!--                <button type="button" on:click={updateRecipe} class="btn variant-filled"-->
+<!--                >Update Recipe-->
+<!--                </button-->
+<!--                >-->
+<!--            </div>-->
         </div>
         <div class="right">
             <label class="label mb-3" for="ingredients">

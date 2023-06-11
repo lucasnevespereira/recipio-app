@@ -28,9 +28,9 @@
     export let data
 
     const userMenuPopup: PopupSettings = {
-        event: 'focus-click',
+        event: 'click',
         target: 'userMenuList',
-        placement: 'bottom',
+        placement: 'bottom-start',
         closeQuery: '.listbox-item'
     };
 
@@ -59,31 +59,32 @@
                 </svelte:fragment>
                 <svelte:fragment slot="trail">
                     {#if data.user}
-                        <button use:popup={userMenuPopup}>
-                            <Avatar src={getImageURL(data.user?.collectionId, data.user?.id, data.user?.avatar)}
-                                    initials={data.user.username} width="w-10" background="bg-primary-500"/>
-                        </button>
-
-                        <div class="card w-48 shadow-xl py-2" data-popup="userMenuList">
-                            <div class="list-nav">
-                                <div>
-                                    <a href="/dashboard">Dashboard</a>
-                                </div>
-                                <div>
-                                    <a href="/dashboard/settings">Settings</a>
-                                </div>
-                                <div>
-                                    <form
-                                            method="POST"
-                                            action="/auth/logout"
-                                            use:enhance={() => {
+                        <div class="relative">
+                            <button use:popup={userMenuPopup}>
+                                <Avatar src={getImageURL(data.user?.collectionId, data.user?.id, data.user?.avatar)}
+                                        initials={data.user.username} width="w-10" background="bg-primary-500"/>
+                            </button>
+                            <div class="card w-48 shadow-xl py-2" data-popup="userMenuList">
+                                <div class="list-nav">
+                                    <div>
+                                        <a href="/dashboard">Dashboard</a>
+                                    </div>
+                                    <div>
+                                        <a href="/dashboard/settings">Settings</a>
+                                    </div>
+                                    <div>
+                                        <form
+                                                method="POST"
+                                                action="/auth/logout"
+                                                use:enhance={() => {
                                            return async ({ result }) => {
                                           pb.authStore.clear()
                                           await applyAction(result)
                                         }
                                         }}>
-                                        <button>Logout</button>
-                                    </form>
+                                            <button>Logout</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
