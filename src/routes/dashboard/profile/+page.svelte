@@ -53,7 +53,7 @@
         >
             <div class="flex">
                 <h3 class="text-2xl font-medium">Update Profile</h3>
-                <a href={`${window.location.host}//${window.location.host}/${data.user.username}`} target="_blank" class="btn variant-ghost-secondary btn-sm w-50 ml-3">
+                <a href={`/${data.user.username}`} target="_blank" class="btn variant-ghost-secondary btn-sm w-50 ml-3">
                     <span>Your Page</span>
                     <span><Icon src={ArrowUpRight} class="w-4 h-4"/></span>
                 </a>
