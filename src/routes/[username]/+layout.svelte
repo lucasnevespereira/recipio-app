@@ -26,7 +26,7 @@
     <slot />
 </div>
 
-<footer class="inset-x-0 bottom-0 h-16">
+<footer class="inset-x-0 bottom-0 h-16 mt-5">
     <div class="max-w-screen-lg mx-auto flex items-center justify-center">
         <a href="https://recipio-app.vercel.app/" class="flex items-center justify-center">
             <img class="w-6 h-6" src="/logo-transparent.png" alt="logo">

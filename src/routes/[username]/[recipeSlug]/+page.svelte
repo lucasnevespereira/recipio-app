@@ -36,29 +36,31 @@
 
 
 {#if data.recipe}
-    <div class="max-w-3xl mx-auto p-2 lg:p-8">
-        <div class="flex justify-between items-center flex-col lg:flex-row mb-4">
-            <h1 class="text-lg lg:text-xl font-bold">{data.recipe.title}</h1>
-            <button class="hover:cursor-pointer flex items-center text-sm" on:click={shareViaWhatsApp}>
-                <Icon src={Share} class="w-4 h-4 mr-2 text-500"/>
-                Share to WhatsApp
-            </button>
-
+    <div class="max-w-3xl mx-auto p-2 lg:p-8 space-y-5">
+        <div class="flex justify-between items-center flex-col lg:flex-row mb-5">
+            <h2 class="h2 font-bold text-center mx-auto">{data.recipe.title}</h2>
         </div>
-        <img class="w-full object-cover  h-auto max-h-[500px] rounded-lg mb-4 w-32"
+        <img class="w-full object-cover  h-auto max-h-[500px] rounded-lg mb-4"
              src={getImageURL(data.recipe?.collectionId, data.recipe?.id, data.recipe.photo)} alt={data.recipe.title}/>
-        <p class="text-gray-500 mb-4">{data.recipe.description}</p>
+        <p class="text-primary mb-4">{data.recipe.description}</p>
 
-        <h2 class="text-lg lg:text-xl font-bold mb-2">Ingredients</h2>
+        <h3 class="text-lg lg:text-xl font-bold mb-2">Ingredients</h3>
         <ul class="list-disc list-inside mb-4">
             {#each Object.entries(data.recipe.ingredients) as [key, ingredient]}
                 <li>{ingredient}</li>
             {/each}
         </ul>
 
-        <h2 class="text-lg lg:text-xl font-bold mb-2">Instructions</h2>
+        <h3 class="text-lg lg:text-xl font-bold mb-2">Instructions</h3>
         <div class="mb-4 leading-relaxed">
             {@html data.recipe.instructions}
+        </div>
+
+        <div class="w-full flex sm:justify-start lg:justify-end">
+            <button class="hover:cursor-pointer flex items-center text-sm" on:click={shareViaWhatsApp}>
+                <Icon src={Share} class="w-4 h-4 mr-2 text-500"/>
+                Share to WhatsApp
+            </button>
         </div>
     </div>
 {/if}
