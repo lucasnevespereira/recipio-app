@@ -23,12 +23,12 @@
 </div>
 
 <div class="w-full sm:p-0 md:p-1 lg:p-5" style="min-height: 60%">
-    <slot />
+    <slot/>
 </div>
 
 <footer class="inset-x-0 bottom-0 h-16 mt-5">
     <div class="max-w-screen-lg mx-auto flex items-center justify-center">
-        <a href="https://recipio-app.vercel.app/" class="flex items-center justify-center">
+        <a href="/" class="flex items-center justify-center">
             <img class="w-6 h-6" src="/logo-transparent.png" alt="logo">
             <p class="text-base font-bold">Recipio</p>
         </a>
