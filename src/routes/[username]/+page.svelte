@@ -1,9 +1,29 @@
 <script>
     import {getImageURL} from "$lib/utils/image";
     import {goto} from "$app/navigation";
+    import {page} from "$app/stores";
+
+    const {url} = $page;
 
     export let data;
 </script>
+
+
+<svelte:head>
+    <title>{`Recipio ${data.user.username}`}</title>
+    <meta property="og:title" content={`${data.user.username}`}>
+    <meta property="og:description" content={`Recipio profile of ${data.user.username}`}>
+    <meta property="og:image" content={getImageURL(data.user?.collectionId, data.user?.id, data.user.avatar)}>
+    <meta property="og:url" content={url}>
+    <meta property="og:site_name" content={data.user.username}>
+    <meta property="og:image:secure_url"
+          content={getImageURL(data.user?.collectionId, data.user?.id, data.user.avatar)}>
+
+    <meta property="whatsapp:title" content={data.user.username}>
+    <meta property="whatsapp:description" content={`Recipio profile of ${data.user.username}`}>
+    <meta property="whatsapp:image"
+          content={getImageURL(data.user?.collectionId, data.user?.id, data.user.avatar)}>
+</svelte:head>
 
 
 <div class="grid auto-cols-auto auto-rows-auto gap-4 place-items-center">

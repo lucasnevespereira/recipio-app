@@ -7,7 +7,7 @@
     const {url} = $page;
 
     const shareViaWhatsApp = () => {
-        const text = `${window.location.href}`;
+        const text = `${data.recipe.title} from Recipio - ${url}`;
         const encodedText = encodeURIComponent(text);
         const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedText}`;
         window.open(whatsappUrl, '_blank');
