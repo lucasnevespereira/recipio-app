@@ -1,32 +1,10 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+    import {page} from '$app/stores'
     import {Icon, Share} from 'svelte-hero-icons';
     import {getImageURL} from "$lib/utils/image";
 
     export let data;
-
-    // Set Open Graph meta tags dynamically
-    onMount(() => {
-        if (data.recipe) {
-            const metaTags = [
-                { property: 'og:title', content: data.recipe.title },
-                { property: 'og:description', content: data.recipe.description },
-                { property: 'og:image', content: data.recipe.photo },
-                // Add more Open Graph meta tags as needed
-
-                { property: 'whatsapp:title', content: data.recipe.title },
-                { property: 'whatsapp:description', content: data.recipe.description },
-                { property: 'whatsapp:image', content: data.recipe.photo }
-            ];
-
-            metaTags.forEach((meta) => {
-                const tag = document.createElement('meta');
-                tag.setAttribute('property', meta.property);
-                tag.setAttribute('content', meta.content);
-                document.head.appendChild(tag);
-            });
-        }
-    });
+    const {url} = $page;
 
     const shareViaWhatsApp = () => {
         const text = `${window.location.href}`;
@@ -39,6 +17,22 @@
     //     console.log("sharing recipe")
     // };
 </script>
+
+<svelte:head>
+    <title>{data.recipe.title}</title>
+    <meta property="og:title" content={data.recipe.title}>
+    <meta property="og:description" content={data.recipe.description}>
+    <meta property="og:image" content={getImageURL(data.recipe?.collectionId, data.recipe?.id, data.recipe.photo)}>
+    <meta property="og:url" content={url}>
+    <meta property="og:site_name" content={data.recipe.title}>
+    <meta property="og:image:secure_url"
+          content={getImageURL(data.recipe?.collectionId, data.recipe?.id, data.recipe.photo)}>
+
+    <meta property="whatsapp:title" content={data.recipe.title}>
+    <meta property="whatsapp:description" content={data.recipe.description}>
+    <meta property="whatsapp:image"
+          content={getImageURL(data.recipe?.collectionId, data.recipe?.id, data.recipe.photo)}>
+</svelte:head>
 
 
 {#if data.recipe}

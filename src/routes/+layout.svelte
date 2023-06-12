@@ -49,7 +49,7 @@
         <svelte:fragment slot="header">
             <AppBar>
                 <svelte:fragment slot="lead">
-                    <button class="md:hidden btn btn-sm mr-4" on:click={drawerOpen}>
+                    <button style="display: none" class="btn btn-sm mr-4" on:click={drawerOpen}>
 					<span>
 						<svg viewBox="0 0 100 80" class="fill-token w-4 h-4">
 							<rect width="100" height="20"/>
@@ -58,7 +58,10 @@
 						</svg>
 					</span>
                     </button>
-                    <a href="/"><strong class="text-xl uppercase">Recipio</strong></a>
+                    <a href="/"><strong class="text-xl uppercase flex items-center">
+                        <img width="32" src="/logo-transparent.png" alt="logo">
+                        Recipio
+                    </strong></a>
                 </svelte:fragment>
                 <svelte:fragment slot="trail">
                     {#if data.user}
