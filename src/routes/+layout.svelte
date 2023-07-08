@@ -23,7 +23,10 @@
     storePopup.set({computePosition, autoUpdate, offset, shift, flip, arrow});
 
     const {params} = $page;
+    const {url} = $page;
     const hasUsername = "username" in params;
+    const hasFamilySlug = "familySlug" in params;
+    let isDashboard = url.href.includes('dashboard')
 
     export let data
 
@@ -44,12 +47,17 @@
         <slot/>
     </AppShell>
 
+{:else if hasFamilySlug}
+    <AppShell>
+        <slot/>
+    </AppShell>
 {:else}
     <AppShell slotSidebarLeft="w-0 md:w-52 bg-surface-500/10">
         <svelte:fragment slot="header">
             <AppBar>
                 <svelte:fragment slot="lead">
-                    <button style="display: none" class="btn btn-sm mr-4" on:click={drawerOpen}>
+                    {#if isDashboard}
+                    <button class="burger-menu btn btn-sm mr-4" on:click={drawerOpen}>
 					<span>
 						<svg viewBox="0 0 100 80" class="fill-token w-4 h-4">
 							<rect width="100" height="20"/>
@@ -58,6 +66,7 @@
 						</svg>
 					</span>
                     </button>
+                    {/if}
                     <a href="/"><strong class="text-xl uppercase flex items-center">
                         <img width="32" src="/logo-transparent.png" alt="logo">
                         Recipio
@@ -74,6 +83,12 @@
                                 <div class="list-nav">
                                     <div>
                                         <a href="/dashboard">Dashboard</a>
+                                    </div>
+                                    <div>
+                                        <a href="/dashboard/recipes">Recipes</a>
+                                    </div>
+                                    <div>
+                                        <a href="/dashboard/families">Families</a>
                                     </div>
                                     <div>
                                         <a href="/dashboard/settings">Settings</a>
@@ -107,6 +122,19 @@
         <slot/>
     </AppShell>
 {/if}
+
+
+<style>
+    .burger-menu {
+        display: none;
+    }
+
+    @media only screen and (max-width: 1024px) {
+        .burger-menu {
+            display: block;
+        }
+    }
+</style>
 
 
 

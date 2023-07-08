@@ -15,7 +15,7 @@
 </div>
 
 {#each data.recipes as recipe}
-    <div class="card p-4 flex hover:cursor-pointer" on:click={goto(`/dashboard/recipes/${recipe.id}`)}>
+    <div class="card p-4 flex hover:cursor-pointer items-center" on:click={goto(`/dashboard/recipes/${recipe.id}`)}>
         <div class="mr-2">
             {#if recipe.photo}
             <Avatar src={getImageURL(recipe.collectionId, recipe.id, recipe.photo, '80x80')}
@@ -26,9 +26,18 @@
                 {/if}
         </div>
         <div>
-            <h3>{recipe.title}</h3>
-            <p>{recipe.description}</p>
+            <h5 class="h5 font-bold">{recipe.title}</h5>
+            <p class="description">{recipe.description}</p>
         </div>
         <div></div>
     </div>
 {/each}
+
+
+<style>
+    @media only screen and (max-width: 1024px) {
+        .description {
+            display: none;
+        }
+    }
+</style>
