@@ -28,7 +28,7 @@
 
 <footer class="inset-x-0 bottom-0 h-16 mt-5">
     <div class="max-w-screen-lg mx-auto flex items-center justify-center">
-        <a href="/" class="flex items-center justify-center">
+        <a href="/" target="_blank" class="flex items-center justify-center">
             <img class="w-6 h-6" src="/logo-transparent.png" alt="logo">
             <p class="text-base font-bold">Recipio</p>
         </a>
