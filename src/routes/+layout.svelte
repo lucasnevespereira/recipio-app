@@ -1,5 +1,5 @@
 <script lang='ts'>
-    // The ordering of these imports is critical to your app working properly
+    // // The ordering of these imports is critical to your app working properly
     import '@skeletonlabs/skeleton/themes/theme-modern.css';
     // If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
     import '@skeletonlabs/skeleton/styles/skeleton.css';
@@ -87,9 +87,9 @@
                                     <div>
                                         <a href="/dashboard/recipes">Recipes</a>
                                     </div>
-                                    <div>
-                                        <a href="/dashboard/families">Families</a>
-                                    </div>
+<!--                                    <div>-->
+<!--                                        <a href="/dashboard/families">Families</a>-->
+<!--                                    </div>-->
                                     <div>
                                         <a href="/dashboard/settings">Settings</a>
                                     </div>

@@ -107,12 +107,6 @@
 
             </label>
 
-<!--            <div class="mt-10">-->
-<!--                <button type="button" on:click={updateRecipe} class="btn variant-filled"-->
-<!--                >Update Recipe-->
-<!--                </button-->
-<!--                >-->
-<!--            </div>-->
         </div>
         <div class="right">
             <label class="label mb-3" for="ingredients">

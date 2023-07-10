@@ -7,6 +7,7 @@
     import {slugify} from "$lib/utils/text";
     import {ArrowLeft, Icon} from "svelte-hero-icons";
 
+    export let data
     let files: FileList;
     let title = '';
     let description = '';
@@ -40,10 +41,10 @@
         } catch (e) {
             console.log(e);
             if (e.status && e.message) {
-                sendToast('Could not create recipe', e.message);
+                sendToast('Could not create recipe', 'error');
                 throw error(e.status, e.message);
             } else {
-                sendToast('Could not create recipe', e.toString());
+                sendToast('Could not create recipe', 'error');
                 throw error(500, e.toString());
             }
         }
@@ -95,13 +96,6 @@
                     </div>
                 {/if}
             </label>
-
-<!--            <div class="mt-10">-->
-<!--                <button type="button" on:click={createRecipe} class="btn variant-filled"-->
-<!--                >Create Recipe-->
-<!--                </button-->
-<!--                >-->
-<!--            </div>-->
         </div>
         <div class="right">
             <label class="label mb-3" for="ingredients">
