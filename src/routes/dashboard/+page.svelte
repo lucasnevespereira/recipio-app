@@ -6,7 +6,7 @@
     <div class="flex items-center justify-between">
         <h3 class="h3 font-bold">Dashboard</h3>
     </div>
-    <div class="grid grid-cols-3 gap-6">
+    <div class="grid lg:grid-cols-3 lg:grid-rows-2 grid-cols-1 grid-rows-2 gap-6">
         <div class="card p-4">
             <p class="h3">{data.user.name}</p>
             <a class="hover:cursor-pointer hover:variant-soft" target="_blank" href={`https://www.recipio.fr/${data.user.username}`}>
@@ -20,4 +20,5 @@
         </div>
     </div>
 </div>
+
 

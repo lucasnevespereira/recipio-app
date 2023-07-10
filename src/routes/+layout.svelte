@@ -18,16 +18,16 @@
     import {computePosition, autoUpdate, offset, shift, flip, arrow} from '@floating-ui/dom';
     import {storePopup} from '@skeletonlabs/skeleton';
     import {pb} from "$lib/pocketbase";
-    import {applyAction, enhance} from '$app/forms'
+    import {applyAction, enhance} from '$app/forms';
 
     storePopup.set({computePosition, autoUpdate, offset, shift, flip, arrow});
 
     const {params} = $page;
-    const {url} = $page;
     const hasUsername = "username" in params;
     const hasFamilySlug = "familySlug" in params;
-    let isDashboard = url.href.includes('dashboard')
 
+    //const {url} = $page;
+    // let isDashboard = url.href.includes('dashboard')
     export let data
 
     const userMenuPopup: PopupSettings = {
@@ -56,17 +56,19 @@
         <svelte:fragment slot="header">
             <AppBar>
                 <svelte:fragment slot="lead">
-                    {#if isDashboard}
-                    <button class="burger-menu btn btn-sm mr-4" on:click={drawerOpen}>
-					<span>
+                    <!--{#if isDashboard}-->
+                        <div class="burger-menu">
+                            <button class="btn btn-sm mr-4" on:click={drawerOpen}>
+                    <span>
 						<svg viewBox="0 0 100 80" class="fill-token w-4 h-4">
 							<rect width="100" height="20"/>
 							<rect y="30" width="100" height="20"/>
 							<rect y="60" width="100" height="20"/>
 						</svg>
 					</span>
-                    </button>
-                    {/if}
+                            </button>
+                        </div>
+                    <!--{/if}-->
                     <a href="/"><strong class="text-xl uppercase flex items-center">
                         <img width="32" src="/logo-transparent.png" alt="logo">
                         Recipio
@@ -87,9 +89,9 @@
                                     <div>
                                         <a href="/dashboard/recipes">Recipes</a>
                                     </div>
-<!--                                    <div>-->
-<!--                                        <a href="/dashboard/families">Families</a>-->
-<!--                                    </div>-->
+                                    <!--                                    <div>-->
+                                    <!--                                        <a href="/dashboard/families">Families</a>-->
+                                    <!--                                    </div>-->
                                     <div>
                                         <a href="/dashboard/settings">Settings</a>
                                     </div>
@@ -125,15 +127,13 @@
 
 
 <style>
-    .burger-menu {
-        display: none;
-    }
 
-    @media only screen and (max-width: 1024px) {
+    @media screen and (min-width: 1024px) {
         .burger-menu {
-            display: block;
+            display: none;
         }
     }
+
 </style>
 
 

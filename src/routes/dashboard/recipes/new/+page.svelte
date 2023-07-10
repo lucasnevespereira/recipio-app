@@ -67,7 +67,7 @@
 
 
 <form>
-    <div class="grid grid-cols-2 gap-6">
+    <div class="grid lg:grid-cols-2 grid-cols-1 lg:grid-rows-1 lg:gap-6">
         <div class="left">
             <label class="label mb-3">
                 <span>Title</span>
@@ -111,6 +111,13 @@
                 <RichEditor bind:editorValue={instructions}/>
                 <textarea name="instructions" class="hidden" bind:value={instructions}></textarea>
             </label>
+
+            <div class="lg:invisible mt-10">
+                <button type="button" on:click={createRecipe} class="btn variant-filled"
+                >Create Recipe
+                </button
+                >
+            </div>
         </div>
     </div>
 </form>
