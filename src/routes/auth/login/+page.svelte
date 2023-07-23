@@ -1,17 +1,38 @@
 <script lang="ts">
-    import {applyAction, enhance} from '$app/forms'
+    import {enhance} from '$app/forms'
     import {pb} from '$lib/pocketbase'
+    import {sendToast} from "$lib/utils/toast";
+    import Spinner from "$lib/components/Spinner.svelte";
+    let loading;
+    const submitLogin = () => {
+        loading = true;
+        pb.authStore.loadFromCookie(document.cookie)
+        return async ({result, update}) => {
+            console.log("result", result)
+            switch (result.type) {
+                case 'success':
+                    await update();
+                    break;
+                case 'failure':
+                    sendToast('Invalid credentials', 'error')
+                    await update();
+                    break;
+                case 'error':
+                    sendToast(result.error.message, 'error');
+                    break;
+                default:
+                    await update();
+            }
+            loading = false;
+        };
+    }
 </script>
 
 <form
         method="POST"
+        action="?/login"
         class="mx-auto max-w-7xl sm:px-6 lg:px-8"
-        use:enhance={() => {
-    return async ({ result }) => {
-      pb.authStore.loadFromCookie(document.cookie)
-      await applyAction(result)
-    }
-  }}
+        use:enhance={submitLogin}
 >
     <div class="flex flex-col items-center mb-8">
         <h2 class="h2 font-bold text-center">Log in</h2>
@@ -45,5 +66,11 @@
         </div>
 
     </div>
-
 </form>
+
+{#if loading}
+    <div class="mx-auto">
+        <Spinner />
+    </div>
+{/if}
+

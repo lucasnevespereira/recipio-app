@@ -11,7 +11,7 @@
         <div class="w-24 h-24 lg:h-32 lg:w-32 rounded-full overflow-hidden hover:cursor-pointer">
             <img
                     class="w-full h-full object-cover"
-                    src={user?.avatar ? getImageURL(user?.collectionId, user?.id, user?.avatar) : `https://ui-avatars.com/api/?name=${user?.name}`}
+                    src={user?.avatar ? getImageURL(user?.collectionId, user?.id, user?.avatar) : `https://ui-avatars.com/api/?name=${user?.username}`}
                     alt="User avatar"
             />
         </div>

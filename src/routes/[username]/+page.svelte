@@ -2,6 +2,8 @@
     import {getImageURL} from "$lib/utils/image";
     import {goto} from "$app/navigation";
     import {page} from "$app/stores";
+    import {Avatar} from "@skeletonlabs/skeleton";
+
     const {url} = $page;
 
     export let data;
@@ -26,8 +28,10 @@
 
 <div class="max-w-[900px] mx-auto grid grid-auto-rows grid-auto-cols sm:grid-cols-1 lg:grid-cols-3 gap-4 place-items-center mb-5">
     {#each data.recipes as recipe (recipe.id)}
-        <div class="relative card card-hover hover:cursor-pointer w-64 sm:max-w-md md:max-w-lg" on:click={goto(`/${data.user.username}/${recipe.slug}`)}>
-            <img class="w-64 h-64 object-cover rounded-lg" src={getImageURL(recipe?.collectionId, recipe?.id, recipe.photo)} alt={recipe.title}/>
+        <div class="relative card card-hover hover:cursor-pointer w-64 sm:max-w-md md:max-w-lg"
+             on:click={goto(`/${data.user.username}/${recipe.slug}`)}>
+                <img class="w-64 h-64 object-cover rounded-lg"
+                     src={getImageURL(recipe?.collectionId, recipe?.id, recipe.photo)} alt={recipe.title}/>
             <div class="absolute bottom-0 left-0 w-full bg-white bg-opacity-90 rounded-b-lg p-2">
                 <p class="text-primary-90 text-center text-sm font-bold">{recipe.title}</p>
             </div>

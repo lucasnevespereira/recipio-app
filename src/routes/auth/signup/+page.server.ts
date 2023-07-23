@@ -1,24 +1,27 @@
-import {redirect} from '@sveltejs/kit'
+import {redirect, fail, error} from '@sveltejs/kit'
 import type {Actions} from './$types'
+import {registerUserSchema, validateData} from "$lib/schemas";
 
 export const actions: Actions = {
-    default: async ({locals, request}) => {
-        const data = Object.fromEntries(await request.formData()) as {
-            username: string
-            email: string
-            password: string
-            passwordConfirm: string
+    register: async ({locals, request}) => {
+        const {formData, errors} = await validateData(await request.formData(), registerUserSchema);
+        if (errors) {
+            console.log(errors)
+            return fail(400, {
+                data: formData,
+                errors: errors.fieldErrors
+            });
         }
 
         try {
-            await locals.pb.collection('users').create(data)
-            await locals.pb.collection('users').requestVerification(data.email)
+            await locals.pb.collection('users').create(formData)
+            await locals.pb.collection('users').requestVerification(formData.email)
             await locals.pb
                 .collection('users')
-                .authWithPassword(data.email, data.password)
-        } catch (e) {
+                .authWithPassword(formData.email, formData.password)
+        } catch (e: any) {
             console.error(e)
-            throw e
+            throw error(e.status, e.message);
         }
 
         throw redirect(303, '/dashboard')
