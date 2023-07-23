@@ -1,4 +1,3 @@
-import type {LayoutServerLoad} from "../../../../.svelte-kit/types/src/routes/dashboard/$types";
 import type {PageServerLoad} from "../../../../.svelte-kit/types/src/routes/auth/login/$types";
 
 export const load: PageServerLoad = async ({locals}) => {
