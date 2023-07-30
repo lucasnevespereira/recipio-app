@@ -19,9 +19,9 @@
 
 
     const checkUsernameAvailability = async (event) => {
-        userNameValue = event.target.value
+        userNameValue = event.target.value.toString().toLowerCase()
         try {
-            const record = await pb.collection('users').getFirstListItem(`username="${event.target.value}"`);
+            const record = await pb.collection('users').getFirstListItem(`username="${userNameValue}"`);
             if (record) {
                 usernameAvailable.set(false);
             }
