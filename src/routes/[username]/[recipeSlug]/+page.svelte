@@ -2,6 +2,7 @@
     import {page} from '$app/stores'
     import {Icon, Share} from 'svelte-hero-icons';
     import {getImageURL} from "$lib/utils/image";
+    import DynamicHTML from "$lib/components/DynamicHTML.svelte";
 
     export let data;
     const {url} = $page;
@@ -53,7 +54,7 @@
 
         <h3 class="text-lg lg:text-xl font-bold mb-2">Instructions</h3>
         <div class="mb-4 leading-relaxed">
-            {@html data.recipe.instructions}
+            <DynamicHTML htmlContent={data.recipe.instructions} />
         </div>
 
         <div class="w-full flex sm:justify-start lg:justify-end">

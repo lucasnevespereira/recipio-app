@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<div class="w-full sm:p-0 md:p-1 lg:p-5" style="min-height: 60%">
+<div class="w-full p-1 lg:p-5" style="min-height: 60%">
     <slot/>
 </div>
 

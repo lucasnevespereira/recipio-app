@@ -16,10 +16,11 @@
 
 
     const createRecipe = async () => {
-        let formData = new FormData();
-        if ($currentUser) {
-            formData.append('user_id', $currentUser.id);
+        if (!data.user.id) {
+            throw error("no user id");
         }
+        let formData = new FormData();
+        formData.append('user_id', data.user.id);
         formData.append('title', title);
         formData.append('description', description);
         formData.append('instructions', instructions);
@@ -62,7 +63,7 @@
 	</span>
     </a>
 
-    <button type="button" on:click={createRecipe} class="btn variant-filled"> Create Recipe </button>
+    <button type="button" on:click={createRecipe} class="btn variant-filled"> Create Recipe</button>
 </div>
 
 

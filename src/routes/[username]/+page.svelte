@@ -2,8 +2,6 @@
     import {getImageURL} from "$lib/utils/image";
     import {goto} from "$app/navigation";
     import {page} from "$app/stores";
-    import {Avatar} from "@skeletonlabs/skeleton";
-
     const {url} = $page;
 
     export let data;

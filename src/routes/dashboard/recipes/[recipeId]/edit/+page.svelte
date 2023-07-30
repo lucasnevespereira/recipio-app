@@ -20,12 +20,12 @@
     });
 
     const updateRecipe = async () => {
-        let formData = new FormData()
-
-        if ($currentUser) {
-            formData.append('user_id', $currentUser.id);
+        if (!data.user.id) {
+            throw error("no user id");
         }
 
+        let formData = new FormData()
+        formData.append('user_id', data.user.id);
         formData.append("title", data.recipe.title)
         formData.append("description", data.recipe.description)
         formData.append("instructions", data.recipe.instructions)
