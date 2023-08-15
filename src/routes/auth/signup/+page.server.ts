@@ -14,6 +14,7 @@ export const actions: Actions = {
         }
 
         try {
+            formData.emailVisibility = true;
             await locals.pb.collection('users').create(formData)
             await locals.pb.collection('users').requestVerification(formData.email)
             await locals.pb

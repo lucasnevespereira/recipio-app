@@ -6,7 +6,8 @@ export const load: PageServerLoad = async ({locals}) => {
             return structuredClone(
                 await locals.pb.collection("families").getFullList({
                     sort: '-created',
-                    filter: `members ~ "${locals.user?.id}"`
+                    filter: `members ~ "${locals.user?.id}" || creator = "${locals.user?.id}"`,
+                    expand: 'members, creator'
                 })
             );
         } catch (e) {

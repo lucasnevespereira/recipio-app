@@ -20,7 +20,7 @@
 <section class="hero-section flex flex-col items-center justify-center h-screen text-white">
     <div class="filter"></div>
     <div class="text-center">
-        <h2 class="text-4xl font-bold mb-2">Discover and Share Flavors</h2>
+        <h2 class="text-4xl font-bold mb-2">Your Digital Cookbook</h2>
         <p class="text-lg text-gray-300 mb-4">Unveil Culinary Traditions with Recipio</p>
         <a href="/auth/signup" class="btn variant-filled">Create an Account</a>
         <p class="mt-4">or <a href="/auth/login" class="text-primary font-bold">login</a> to access your Dashboard</p>

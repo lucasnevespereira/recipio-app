@@ -2,6 +2,7 @@
     import {Avatar} from "@skeletonlabs/skeleton";
     import {getImageURL} from "$lib/utils/image";
     import {goto} from "$app/navigation";
+
     export let data;
 </script>
 
@@ -11,19 +12,29 @@
             <h3 class="h3 font-bold">Recipes</h3>
         </a>
     </h2>
-    <a href="/dashboard/recipes/new" class="btn variant-ghost"> New Recipe </a>
+    {#if data.recipes.length > 0}
+        <a href="/dashboard/recipes/new" class="btn variant-ghost"> New Recipe </a>
+    {/if}
 </div>
+
+{#if data.recipes.length === 0}
+    <div class="mt-10 p-6 border rounded-md text-center">
+        <p class="text-xl font-semibold mb-4">It looks like you have no recipes.</p>
+        <a href="/dashboard/recipes/new" class="mt-6 btn variant-ghost-primary">Create your first recipe</a>
+    </div>
+{/if}
+
 
 {#each data.recipes as recipe}
     <div class="card p-4 flex hover:cursor-pointer items-center" on:click={goto(`/dashboard/recipes/${recipe.id}`)}>
         <div class="mr-2">
             {#if recipe.photo}
-            <Avatar src={getImageURL(recipe.collectionId, recipe.id, recipe.photo, '80x80')}
-                    width="w-16"
-                    rounded="rounded"/>
-                {:else }
+                <Avatar src={getImageURL(recipe.collectionId, recipe.id, recipe.photo, '80x80')}
+                        width="w-16"
+                        rounded="rounded"/>
+            {:else }
                 <div class="placeholder-circle w-16 rounded"></div>
-                {/if}
+            {/if}
         </div>
         <div>
             <h5 class="h5 font-bold">{recipe.title}</h5>

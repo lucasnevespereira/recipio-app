@@ -90,11 +90,11 @@
                                         <a href="/dashboard/recipes">Recipes</a>
                                     </div>
                                     <div>
+                                        <a href="/dashboard/families">Families</a>
+                                    </div>
+                                    <div>
                                         <a href="/dashboard/profile">Profile</a>
                                     </div>
-                                    <!--                                    <div>-->
-                                    <!--                                        <a href="/dashboard/families">Families</a>-->
-                                    <!--                                    </div>-->
                                     <div>
                                         <a href="/dashboard/settings">Settings</a>
                                     </div>
