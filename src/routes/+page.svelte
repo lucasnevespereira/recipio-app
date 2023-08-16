@@ -7,7 +7,7 @@
     <title>{`Recipio`}</title>
     <meta property="og:title" content={`Recipio`}>
     <meta property="og:description" content={"Unveil Culinary Traditions with Recipio"}>
-    <meta property="og:image" content={"/logo-transparent.png"}>
+    <meta property="og:image" content={"/logo.png"}>
     <meta property="og:url" content={"https://www.recipio.fr"}>
     <meta property="og:site_name" content={"Recipio"}>
 
