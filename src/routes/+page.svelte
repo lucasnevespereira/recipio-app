@@ -3,7 +3,7 @@
     let currentYear = new Date().getFullYear();
 </script>
 
-<section class="hero-section flex flex-col items-center justify-center h-screen text-white pt-3">
+<section class="hero-section flex flex-col items-center justify-center h-screen text-white">
     <div class="filter"></div>
     <div class="text-center">
         <h2 class="text-4xl font-bold mb-2">Discover and Share Flavors</h2>

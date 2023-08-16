@@ -11,6 +11,7 @@
         <li><a href="/dashboard" on:click={drawerClose}>Dashboard</a></li>
         <li><a href="/dashboard/recipes" on:click={drawerClose}>Recipes</a></li>
         <li><a href="/dashboard/profile" on:click={drawerClose}>Profile</a></li>
+        <li><a href="/dashboard/settings" on:click={drawerClose}>Settings</a></li>
 <!--        <li><a href="/dashboard/families" on:click={drawerClose}>Families</a></li>-->
     </ul>
 </nav>
