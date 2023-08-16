@@ -26,8 +26,8 @@
     const hasUsername = "username" in params;
     const hasFamilySlug = "familySlug" in params;
 
-    //const {url} = $page;
-    // let isDashboard = url.href.includes('dashboard')
+    const {url} = $page;
+    let isDashboard = url.href.includes('dashboard')
     export let data
 
     const userMenuPopup: PopupSettings = {
@@ -56,7 +56,7 @@
         <svelte:fragment slot="header">
             <AppBar>
                 <svelte:fragment slot="lead">
-                    <!--{#if isDashboard}-->
+                    {#if isDashboard}
                         <div class="burger-menu">
                             <button class="btn btn-sm mr-4" on:click={drawerOpen}>
                     <span>
@@ -68,7 +68,7 @@
 					</span>
                             </button>
                         </div>
-                    <!--{/if}-->
+                    {/if}
                     <a href="/"><strong class="text-xl uppercase flex items-center">
                         <img width="32" src="/logo-transparent.png" alt="logo">
                         Recipio
@@ -120,7 +120,6 @@
                 </svelte:fragment>
             </AppBar>
         </svelte:fragment>
-
         <slot/>
     </AppShell>
 {/if}
