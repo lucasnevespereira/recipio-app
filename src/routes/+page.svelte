@@ -14,7 +14,7 @@
     <meta property="whatsapp:title" content={"Recipio"}>
     <meta property="whatsapp:description" content={"Unveil Culinary Traditions with Recipio"}>
     <meta property="whatsapp:image"
-          content={"/logo-transparent.png"}>
+          content={"/logo.png"}>
 </svelte:head>
 
 <section class="hero-section flex flex-col items-center justify-center h-screen text-white">
