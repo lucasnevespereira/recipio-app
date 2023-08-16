@@ -1,7 +1,21 @@
 <script lang="ts">
-    import { Icon, PlusCircle, Share, UserCircle} from "svelte-hero-icons";
+    import {Icon, PlusCircle, Share, UserCircle} from "svelte-hero-icons";
     let currentYear = new Date().getFullYear();
 </script>
+
+<svelte:head>
+    <title>{`Recipio`}</title>
+    <meta property="og:title" content={`Recipio`}>
+    <meta property="og:description" content={"Unveil Culinary Traditions with Recipio"}>
+    <meta property="og:image" content={"/logo-transparent.png"}>
+    <meta property="og:url" content={"https://www.recipio.fr"}>
+    <meta property="og:site_name" content={"Recipio"}>
+
+    <meta property="whatsapp:title" content={"Recipio"}>
+    <meta property="whatsapp:description" content={"Unveil Culinary Traditions with Recipio"}>
+    <meta property="whatsapp:image"
+          content={"/logo-transparent.png"}>
+</svelte:head>
 
 <section class="hero-section flex flex-col items-center justify-center h-screen text-white">
     <div class="filter"></div>
@@ -18,12 +32,17 @@
         <div class="container mx-auto flex flex-col lg:flex-row items-center justify-between">
             <div class="lg:w-1/2 text-center lg:text-left">
                 <h2 class="text-4xl font-bold text-primary mb-4">Unveil Your Culinary Creations</h2>
-                <p class="text-gray-700 leading-relaxed mb-6">Embrace your inner chef with Recipio! Upon joining our vibrant culinary community, your cooking journey takes center stage. Your creations deserve to be celebrated, which is why we offer a personalized public profile exclusively for you.</p>
-                <p class="text-gray-700 leading-relaxed mb-6">Imagine sharing your passion for cooking with the world. As you curate your recipes, they seamlessly find a home on your public profile. And here's the best part: your profile link is as simple as <span class="font-semibold">recipio.fr/username</span>.</p>
+                <p class="text-gray-700 leading-relaxed mb-6">Embrace your inner chef with Recipio! Upon joining our
+                    vibrant culinary community, your cooking journey takes center stage. Your creations deserve to be
+                    celebrated, which is why we offer a personalized public profile exclusively for you.</p>
+                <p class="text-gray-700 leading-relaxed mb-6">Imagine sharing your passion for cooking with the world.
+                    As you curate your recipes, they seamlessly find a home on your public profile. And here's the best
+                    part: your profile link is as simple as <span class="font-semibold">recipio.fr/username</span>.</p>
                 <p class="text-gray-700 leading-relaxed">Ready to showcase your culinary artistry?</p>
             </div>
             <div class="mt-10 lg:mt-0 flex justify-center relative">
-                <img src="/images/phone-mockup.png" alt="iPhone Mock" class="iphone-mockup w-2/3 lg:w-3/4 max-w-sm h-auto rounded-lg"/>
+                <img src="/images/phone-mockup.png" alt="iPhone Mock"
+                     class="iphone-mockup w-2/3 lg:w-3/4 max-w-sm h-auto rounded-lg"/>
             </div>
         </div>
     </section>
@@ -39,17 +58,20 @@
                 <div class="bg-white/75 p-6 rounded-lg shadow-md flex flex-col items-center">
                     <Icon src={UserCircle} class="w-12 h-12 mb-4" alt="Create Account Icon"/>
                     <h4 class="text-xl font-semibold mb-2">Create an Account</h4>
-                    <p class="text-gray-600">Join our culinary community by creating a personalized account to access all the features.</p>
+                    <p class="text-gray-600">Join our culinary community by creating a personalized account to access
+                        all the features.</p>
                 </div>
                 <div class="bg-white/75 p-6 rounded-lg shadow-md flex flex-col items-center">
                     <Icon src={PlusCircle} class="w-12 h-12 mb-4" alt="Create Account Icon"/>
                     <h4 class="text-xl font-semibold mb-2">Create Recipes</h4>
-                    <p class="text-gray-600">Craft and share your favorite recipes, showcasing your culinary creativity to the world.</p>
+                    <p class="text-gray-600">Craft and share your favorite recipes, showcasing your culinary creativity
+                        to the world.</p>
                 </div>
                 <div class="bg-white/75 p-6 rounded-lg shadow-md flex flex-col items-center">
                     <Icon src={Share} class="w-12 h-12 mb-4" alt="Create Account Icon"/>
                     <h4 class="text-xl font-semibold mb-2">Share Your Creations</h4>
-                    <p class="text-gray-600">Connect with food enthusiasts and share your culinary creations across the community.</p>
+                    <p class="text-gray-600">Connect with food enthusiasts and share your culinary creations across the
+                        community.</p>
                 </div>
             </div>
         </div>
@@ -61,7 +83,9 @@
         <div class="container mx-auto text-center py-16">
             <h3 class="text-3xl font-semibold mb-8">Start Sharing Your Culinary Journey</h3>
             <div class="mx-auto">
-                <p class="text-gray-600">Embark on a culinary adventure with Recipio. Share your recipes, connect with fellow food enthusiasts, and create a digital legacy of your culinary creations. Join our community today and celebrate the art of cooking like never before.</p>
+                <p class="text-gray-600">Embark on a culinary adventure with Recipio. Share your recipes, connect with
+                    fellow food enthusiasts, and create a digital legacy of your culinary creations. Join our community
+                    today and celebrate the art of cooking like never before.</p>
                 <a href="/auth/signup" class="btn variant-filled mt-4">Get Started</a>
             </div>
         </div>
