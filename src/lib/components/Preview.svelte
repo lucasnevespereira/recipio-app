@@ -12,7 +12,7 @@
                         <img
                                 src={user?.avatar
 							? getImageURL(user?.collectionId, user?.id, user?.avatar)
-							: `https://ui-avatars.com/api/?name=${user?.name}`}
+							: `https://ui-avatars.com/api/?name=${user?.username}&background=9294F5`}
                                 alt="User avatar"/>
                     </div>
                 </div>

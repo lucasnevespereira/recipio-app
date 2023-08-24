@@ -3,7 +3,7 @@
     import {invalidateAll} from "$app/navigation";
     import {applyAction, enhance} from "$app/forms";
     import {Avatar} from "@skeletonlabs/skeleton";
-    import { ArrowUpRight, Icon} from "svelte-hero-icons";
+    import {ArrowUpRight, Icon, Pencil, PencilSquare} from "svelte-hero-icons";
 
     export let data;
     export let form;
@@ -59,15 +59,16 @@
                 </a>
             </div>
             <div class="form-control w-full max-w-lg">
-                <label for="avatar" class="avatar w-32 rounded-full hover:cursor-pointer">
+                <label for="avatar" class="avatar relative w-32 rounded-full hover:cursor-pointer">
                     <Avatar
                             src={data.user?.avatar
 							? getImageURL(data.user?.collectionId, data.user?.id, data.user?.avatar)
-							: `https://ui-avatars.com/api/?name=${data.user?.name}`}
+							: `https://ui-avatars.com/api/?name=${data.user?.username}&background=9294F5`}
                             alt="user avatar"
                             id="avatar-preview"
                             class="w-32 rounded"
                     />
+                    <Icon src={PencilSquare} size="32" class="absolute bottom-1 right-1 p-1 text-white bg-primary-500 rounded-full"/>
                 </label>
                 <input
                         type="file"
@@ -98,9 +99,9 @@
         </form>
     </div>
     <div class="flex flex-row mx-auto pt-10 lg:p-0">
-            <iframe title="preview-iframe" id="preview-iframe" class="preview-iframe"
-                    src={`${window.location.protocol}//${window.location.host}/${data.user.username}`}
-                    sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
+        <iframe title="preview-iframe" id="preview-iframe" class="preview-iframe"
+                src={`${window.location.protocol}//${window.location.host}/${data.user.username}`}
+                sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
     </div>
 </div>
 
@@ -116,9 +117,9 @@
         max-height: 664px;
         border: 10px solid black;
         border-radius: 49px;
-        -moz-box-shadow:    inset 0 0 12px #494949;
+        -moz-box-shadow: inset 0 0 12px #494949;
         -webkit-box-shadow: inset 0 0 12px #494949;
-        box-shadow:         inset 2px 0 12px #494949;
+        box-shadow: inset 2px 0 12px #494949;
     }
 </style>
 

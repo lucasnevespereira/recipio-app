@@ -8,7 +8,6 @@ export const actions: Actions = {
 
         try {
             await locals.pb.collection('users').requestEmailChange(formData.newEmail);
-            console.log("email sent")
             return {
                 form: {updateEmailSuccess: true},
             };

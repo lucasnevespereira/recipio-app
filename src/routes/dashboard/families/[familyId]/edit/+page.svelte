@@ -1,64 +1,53 @@
 <script lang="ts">
-    import {error} from '@sveltejs/kit';
-    import {pb} from '$lib/pocketbase';
-    import {sendToast} from "$lib/utils/toast";
-    import {slugify, generateInviteToken} from "$lib/utils/text";
     import {ArrowLeft, Icon} from "svelte-hero-icons";
+    import {pb} from "$lib/pocketbase";
+    import {sendToast} from "$lib/utils/toast";
+    import {error} from "@sveltejs/kit";
+    import {slugify} from "$lib/utils/text";
     import RichEditor from "$lib/components/RichEditor/RichEditor.svelte";
 
-    export let data
-    let familyName = '';
-    let pageTitle = '';
-    let slug = '';
-    let pageAboutTitle = ''
-    let pageAboutContent = '';
-    let recipesMenuName = '';
-    let aboutMenuName = ''
-
-    const createFamily = async () => {
-        if (!data.user.id) {
-            throw error("no user id");
+    export let data;
+    const updateFamily = async () => {
+        if (!data.family.id) {
+            throw error("no family id");
         }
-        let formData = new FormData();
-        formData.append('name', familyName);
-        formData.append('page_title', pageTitle);
-        formData.append('slug', slugify(slug))
-        formData.append('creator', data.user.id);
-        formData.append('invite_token', generateInviteToken())
-        formData.append('about_title', pageAboutTitle);
-        formData.append('about_content', pageAboutContent);
-        formData.append('menu_about_name', aboutMenuName);
-        formData.append('menu_recipes_name', recipesMenuName);
+
+        let formData = new FormData()
+
+        formData.append('name', data.family.name);
+        formData.append('page_title', data.family.page_title);
+        formData.append('slug', slugify(data.family.slug))
+        formData.append('about_title', data.family.about_title)
+        formData.append('about_content', data.family.about_content)
+        formData.append('menu_about_name', data.family.menu_about_name);
+        formData.append('menu_recipes_name', data.family.menu_recipes_name);
+
 
         try {
-            const family = await pb.collection('families').create(formData);
-            await pb.collection('users').update(data.user.id, {
-                families: [family.id],
-            });
+            await pb.collection('families').update(data.family.id, formData);
+            sendToast('Family Updated');
         } catch (e) {
-            console.log(e);
+            sendToast('Could not update family', 'error');
+            console.error(e);
             if (e.status && e.message) {
-                sendToast('Could not create family', 'error');
                 throw error(e.status, e.message);
             } else {
-                sendToast('Could not create family', 'error');
                 throw error(500, e.toString());
             }
         }
+    }
 
-        sendToast('Family Created');
-        window.location.href = "/dashboard/families"
-    };
 </script>
 
 
 <div class="flex items-center justify-between">
-    <a class="flex items-center h4" href="/dashboard/families">
+    <h4 class="h4 flex items-center">
         <Icon src={ArrowLeft} class="w-4 h-4"/>
-        <span class="ml-1">Back to Families</span>
-    </a>
-    <button type="button" on:click={createFamily} class="btn variant-filled">Create Family</button>
+        <a href={`/dashboard/families`}>Back to families</a>
+    </h4>
+    <button type="button" class="btn variant-ghost-secondary" on:click={updateFamily}> Save Family</button>
 </div>
+
 <div class="form-wrapper">
     <section class="form-section">
         <h2>Basic Information</h2>
@@ -66,15 +55,15 @@
             <div>
                 <label class="label mb-3">
                     <span>Family Name</span>
-                    <input class="input" type="text" bind:value={familyName} placeholder="Enter family name"/>
+                    <input class="input" type="text" bind:value={data.family.name} placeholder="Enter family name"/>
                 </label>
                 <label class="label mb-3">
                     <span>Page Title</span>
-                    <input class="input" type="text" bind:value={pageTitle} placeholder="Enter page title"/>
+                    <input class="input" type="text" bind:value={data.family.page_title} placeholder="Enter page title"/>
                 </label>
                 <label class="label mb-3">
                     <span>Page Slug</span>
-                    <input class="input" type="text" bind:value={slug} placeholder="Enter page slug"/>
+                    <input class="input" type="text" bind:value={data.family.slug} placeholder="Enter page slug"/>
                 </label>
             </div>
         </div>
@@ -86,12 +75,12 @@
             <div>
                 <label class="label mb-3">
                     <span>Page About Title</span>
-                    <input class="input" type="text" bind:value={pageAboutTitle} placeholder="Enter page about title"/>
+                    <input class="input" type="text" bind:value={data.family.about_title} placeholder="Enter page about title"/>
                 </label>
                 <label class="label mb-3">
                     <span>Page About Content</span>
-                    <RichEditor bind:editorValue={pageAboutContent}/>
-                    <textarea name="about_content" class="hidden" bind:value={pageAboutContent}></textarea>
+                    <RichEditor bind:editorValue={data.family.about_content}/>
+                    <textarea name="about_content" class="hidden" bind:value={data.family.about_content}></textarea>
                 </label>
             </div>
         </div>
@@ -103,19 +92,19 @@
             <div>
                 <label class="label mb-3">
                     <span>Recipes Menu Name</span>
-                    <input class="input" type="text" bind:value={recipesMenuName}
+                    <input class="input" type="text" bind:value={data.family.menu_recipes_name}
                            placeholder="Enter recipes menu name"/>
                 </label>
                 <label class="label mb-3">
                     <span>About Menu Name</span>
-                    <input class="input" type="text" bind:value={aboutMenuName} placeholder="Enter about menu name"/>
+                    <input class="input" type="text" bind:value={data.family.menu_about_name} placeholder="Enter about menu name"/>
                 </label>
             </div>
         </div>
     </section>
 
     <div class="form-section-action">
-        <button type="button" on:click={createFamily} class="btn variant-filled">Create Family</button>
+        <button type="button" on:click={updateFamily} class="btn variant-filled">Save Family</button>
     </div>
 </div>
 

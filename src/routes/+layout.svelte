@@ -9,16 +9,15 @@
     import {
         AppBar,
         AppShell,
-        Avatar,
         drawerStore,
         popup,
     } from '@skeletonlabs/skeleton';
     import type {PopupSettings} from '@skeletonlabs/skeleton';
-    import {getImageURL} from "$lib/utils/image";
     import {computePosition, autoUpdate, offset, shift, flip, arrow} from '@floating-ui/dom';
     import {storePopup} from '@skeletonlabs/skeleton';
     import {pb} from "$lib/pocketbase";
     import {applyAction, enhance} from '$app/forms';
+    import UserAvatar from "$lib/components/UserAvatar.svelte";
 
     storePopup.set({computePosition, autoUpdate, offset, shift, flip, arrow});
 
@@ -27,7 +26,7 @@
     const hasFamilySlug = "familySlug" in params;
 
     const {url} = $page;
-    let isDashboard = url.href.includes('dashboard')
+    $: isDashboard = $page.url.href.includes('dashboard');
     export let data
 
     const userMenuPopup: PopupSettings = {
@@ -54,7 +53,8 @@
 {:else}
     <AppShell slotSidebarLeft="w-0 md:w-52 bg-surface-500/10">
         <svelte:fragment slot="header">
-            <AppBar>
+            <AppBar background={isDashboard ? "bg-surface-200" : "bg-surface-200-opacity-50"}
+                    regionRowMain={!isDashboard && "absolute w-full px-10 py-4 bg-surface-filter-500 shadow-sm"} padding={!isDashboard ? "p-0" : "p-4"}>
                 <svelte:fragment slot="lead">
                     {#if isDashboard}
                         <div class="burger-menu">
@@ -78,8 +78,11 @@
                     {#if data.user}
                         <div class="relative">
                             <button use:popup={userMenuPopup}>
-                                <Avatar src={getImageURL(data.user?.collectionId, data.user?.id, data.user?.avatar)}
-                                        initials={data.user.username} width="w-10" background="bg-primary-500"/>
+                                <UserAvatar
+                                        collectionId={data.user?.collectionId}
+                                        userId={data.user?.id}
+                                        avatar={data.user?.avatar}
+                                        username={data.user.username}/>
                             </button>
                             <div class="card w-48 shadow-xl py-2" data-popup="userMenuList">
                                 <div class="list-nav">
@@ -116,8 +119,8 @@
                         </div>
                     {:else }
                         <div class="flex">
-                            <a href="/auth/login" class="btn variant-ghost mr-2">Login</a>
-                            <a href="/auth/signup" class="btn variant-ghost mr-2">Signup</a>
+                            <a href="/auth/login" class="btn variant-filled mr-2">Login</a>
+                            <a href="/auth/signup" class="btn variant-filled mr-2">Signup</a>
                         </div>
                     {/if}
                 </svelte:fragment>
@@ -129,7 +132,6 @@
 
 
 <style>
-
     @media screen and (min-width: 1024px) {
         .burger-menu {
             display: none;

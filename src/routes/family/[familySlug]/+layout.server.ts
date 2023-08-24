@@ -9,11 +9,16 @@ export const load: LayoutServerLoad = async ({params}) => {
     }
 
     try {
-        const res = await pb.collection('families').getFirstListItem(`slug="${params.familySlug}"`)
-        const family = res.export()
+        const familyRes = await pb.collection('families').getFirstListItem(`slug="${params.familySlug}"`)
+        const family = familyRes.export()
 
+        const recipes = await pb.collection('recipes').getFullList({
+            sort: '-created',
+            filter: `families ~ "${family.id}"`,
+        });
         return {
-            family: family
+            family: family,
+            recipes: structuredClone(recipes)
         }
     } catch (e) {
         console.error(e)

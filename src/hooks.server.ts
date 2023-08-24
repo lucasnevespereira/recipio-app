@@ -1,4 +1,4 @@
-import { pb } from '$lib/pocketbase'
+import {currentUser, pb} from '$lib/pocketbase'
 import type { Handle } from '@sveltejs/kit'
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -14,6 +14,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     event.locals.pb = pb
     event.locals.user = structuredClone(pb.authStore.model)
+    currentUser.set(pb.authStore.model)
 
     const response = await resolve(event)
 

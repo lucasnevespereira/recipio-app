@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {FileDropzone, InputChip} from "@skeletonlabs/skeleton";
+    import {FileDropzone, InputChip, ListBox, ListBoxItem} from "@skeletonlabs/skeleton";
     import RichEditor from "$lib/components/RichEditor/RichEditor.svelte";
     import {ArrowLeft, Icon} from "svelte-hero-icons";
     import {onMount} from "svelte";
@@ -9,8 +9,8 @@
 
     export let data;
     let files: FileList;
-
     let ingredientsTmpList = [];
+    let familiesList = data.recipe.families
 
     onMount(() => {
         // Initialize temporaryList with data.recipe.ingredients if it exists
@@ -30,6 +30,9 @@
         formData.append("description", data.recipe.description)
         formData.append("instructions", data.recipe.instructions)
 
+        familiesList.forEach((value, index) => {
+            formData.append(`families[${index}]`, value);
+        });
 
         const recipeIngredients = {};
         ingredientsTmpList.forEach((element, index) => {
@@ -63,7 +66,7 @@
         <Icon src={ArrowLeft} class="w-4 h-4"/>
         <a href={`/dashboard/recipes/${data.recipe.id}`}>{data.recipe.title}</a>
     </h4>
-    	<button type="button" class="btn variant-ghost-secondary" on:click={updateRecipe}> Save Recipe </button>
+    <button type="button" class="btn variant-ghost-secondary" on:click={updateRecipe}> Save Recipe</button>
 </div>
 
 
@@ -84,7 +87,7 @@
                         placeholder="Describe your recipe"></textarea>
             </label>
 
-            <label class="label mb-3" for="">
+            <label class="label mb-3">
                 <span>Image</span>
                 <FileDropzone name="files" bind:files>
                     <svelte:fragment slot="message">Upload a <b>recipe image</b></svelte:fragment>
@@ -106,6 +109,18 @@
                 {/if}
 
             </label>
+
+            {#if data.recipe.families.length > 0}
+                <label class="label mb-3">
+                    <span>Add to Family</span>
+                    <ListBox multiple>
+                        {#each data.recipe.expand.families as family}
+                            <ListBoxItem bind:group={familiesList} name="medium"
+                                         value={family.id}>{family.name}</ListBoxItem>
+                        {/each}
+                    </ListBox>
+                </label>
+            {/if}
 
         </div>
         <div class="right">
