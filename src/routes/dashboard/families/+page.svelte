@@ -108,7 +108,7 @@
 {/if}
 
 {#each data.families as family}
-    <div class="card p-4 grid grid-cols-1 md:grid-cols-4 gap-4 items-center content-center">
+    <div class="card p-4 grid md:grid-cols-4 gap-4 items-center content-center">
         <!-- Titles -->
         <div class="font-semibold text-primary hidden md:block">Name</div>
         <div class="font-semibold text-primary hidden md:block">Members</div>
@@ -116,14 +116,14 @@
         <div class="font-semibold text-primary hidden md:block"></div>
 
         <!-- Family Name column -->
-        <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-0">
+        <div class="flex flex-col md:flex-row items-center md:space-y-0 md:space-x-0">
             <div class="font-semibold text-primary md:hidden">Name</div>
-            <div>{family.name}</div>
+            <div class="text-center">{family.name}</div>
         </div>
 
         <!-- Members column -->
         <a href={`/dashboard/families/${family.id}/members`}
-           class="flex flex-col hover:cursor-pointer md:flex-row items-center space-y-2 md:space-y-0 md:space-x-0">
+           class="flex flex-col hover:cursor-pointer md:flex-row items-center md:space-y-0 md:space-x-0">
             <div class="font-semibold text-primary md:hidden">Members</div>
             <div class="flex space-x-2">
                 {#if family.expand.members}
@@ -135,13 +135,13 @@
                                 username={member.username}/>
                     {/each}
                 {:else}
-                    <p>No members</p>
+                    <p class="text-center">None</p>
                 {/if}
             </div>
         </a>
 
         <!-- Creator column -->
-        <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-0">
+        <div class="flex flex-col md:flex-row items-center md:space-y-0 md:space-x-0">
             <div class="font-semibold text-primary md:hidden">Creator</div>
             <UserAvatar
                     collectionId={family.expand.creator?.collectionId}
@@ -150,7 +150,7 @@
                     username={family.expand.creator?.username}/>
         </div>
 
-        <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-0 gap-2 relative">
+        <div class="flex flex-col md:flex-row items-center md:space-y-0 md:space-x-0 gap-2 relative">
             <div class="font-semibold text-primary md:hidden md:space-x-2">Actions</div>
             <a href={`/family/${family.slug}`} target="_blank" class="btn variant-ghost-secondary btn-sm w-50 mr-3">
                 <span>Page</span>
