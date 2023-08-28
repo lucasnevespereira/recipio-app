@@ -17,7 +17,7 @@
     {:else}
         <ViewModeToggle bind:viewMode={viewMode}/>
         {#if viewMode === 'gallery'}
-            <div class="max-w-[900px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-start">
+            <div class="max-w-[900px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center">
                 {#each data.recipes as recipe (recipe.id)}
                     <RecipeCard
                             recipe={recipe}

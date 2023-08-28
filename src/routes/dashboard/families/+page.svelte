@@ -151,7 +151,7 @@
         </div>
 
         <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-0 gap-2 relative">
-            <div class="font-semibold text-primary md:hidden md:space-x-2"></div>
+            <div class="font-semibold text-primary md:hidden md:space-x-2">Actions</div>
             <a href={`/family/${family.slug}`} target="_blank" class="btn variant-ghost-secondary btn-sm w-50 mr-3">
                 <span>Page</span>
                 <span><Icon src={ArrowUpRight} class="w-4 h-4"/></span>
@@ -159,7 +159,8 @@
             <button on:click|stopPropagation={() => openPopoverId = family.id}>
                 <Icon src={EllipsisVertical} class="w-6 h-6"/>
             </button>
-            <Popup isOpen={openPopoverId === family.id} closePopover={() => openPopoverId = null}>
+            <Popup top="-20px" right="5px" isOpen={openPopoverId === family.id}
+                   closePopover={() => openPopoverId = null}>
                 {#if family.creator === data.user.id}
                     <a href={`/dashboard/families/${family.id}/edit`}
                        class="block py-2 px-4 hover:bg-secondary-100 rounded">Edit</a>

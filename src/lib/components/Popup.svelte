@@ -6,7 +6,8 @@
     export let loading = false;
 
     export let width = 'w-32'
-    export let position = {top: '20px', right: '10px'};
+    export let top = "20px";
+    export let right = "20px"
     export let additionalClasses = "";
     export let handleClose; // New prop for handling close
 
@@ -40,7 +41,7 @@
             </div>
         {:else}
             <div class={`absolute z-10 rounded card ${width} shadow-xl mt-2 p-2 ${additionalClasses}`}
-                 style={`top: ${position.top}; right: ${position.right};`}>
+                 style={`top: ${top}; right: ${right};`}>
                 <slot></slot>
             </div>
         {/if}
