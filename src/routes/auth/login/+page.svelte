@@ -8,7 +8,6 @@
         loading = true;
         pb.authStore.loadFromCookie(document.cookie)
         return async ({result, update}) => {
-            console.log("result", result)
             switch (result.type) {
                 case 'success':
                     await update();

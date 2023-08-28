@@ -2,11 +2,17 @@
     import {getImageURL} from "$lib/utils/image";
     import {goto} from "$app/navigation";
     import {page} from "$app/stores";
+    import ViewModeToggle from "$lib/components/ViewModeToggle.svelte";
+    import {onMount} from "svelte";
+    import RecipeCard from "$lib/components/RecipeCard.svelte";
+
     const {url} = $page;
-
     export let data;
+    let viewMode = "gallery";
+    onMount(() => {
+        viewMode = localStorage.getItem('viewMode') || "gallery";
+    });
 </script>
-
 
 <svelte:head>
     <title>{`${data.user.username} - Recipio`}</title>
@@ -24,16 +30,34 @@
           content={getImageURL(data.user?.collectionId, data.user?.id, data.user.avatar)}>
 </svelte:head>
 
-<div class="max-w-[900px] mx-auto grid grid-auto-rows grid-auto-cols sm:grid-cols-1 lg:grid-cols-3 gap-4 place-items-center mb-5">
-    {#each data.recipes as recipe (recipe.id)}
-        <div class="relative card card-hover hover:cursor-pointer w-64 sm:max-w-md md:max-w-lg"
-             on:click={goto(`/${data.user.username}/${recipe.slug}`)}>
-                <img class="w-64 h-64 object-cover rounded-lg"
-                     src={getImageURL(recipe?.collectionId, recipe?.id, recipe.photo)} alt={recipe.title}/>
-            <div class="absolute bottom-0 left-0 w-full bg-white bg-opacity-90 rounded-b-lg p-2">
-                <p class="text-primary-90 text-center text-sm font-bold">{recipe.title}</p>
-            </div>
+{#if data.recipes.length === 0}
+    <p class="card text-center max-w-md mx-auto p-2">No recipes available yet!</p>
+{:else}
+    <ViewModeToggle bind:viewMode={viewMode}/>
+    {#if viewMode === 'gallery'}
+        <div class="max-w-[900px] mx-auto grid grid-auto-rows grid-auto-cols sm:grid-cols-1 lg:grid-cols-3 gap-4 place-items-center mb-5">
+            {#each data.recipes as recipe (recipe.id)}
+                <RecipeCard
+                        recipe={recipe}
+                        view="gallery"
+                        url={`/${data.user.username}/${recipe.slug}`}/>
+            {/each}
         </div>
-    {/each}
-</div>
+    {/if}
+
+    {#if viewMode === 'list'}
+        <div class="max-w-[900px] mx-auto">
+            {#if data.recipes.length === 0}
+                <p class="text-center text-xl">No recipes available yet!</p>
+            {/if}
+            {#each data.recipes as recipe (recipe.id)}
+                <RecipeCard
+                        recipe={recipe}
+                        view="list"
+                        url={`/${data.user.username}/${recipe.slug}`}/>
+            {/each}
+        </div>
+    {/if}
+{/if}
+
 

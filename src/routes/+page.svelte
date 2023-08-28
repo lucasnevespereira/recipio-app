@@ -1,6 +1,9 @@
 <script lang="ts">
-    import {Icon, PlusCircle, Share, UserCircle} from "svelte-hero-icons";
+    import {Icon, PlusCircle, Share, UserCircle, Users} from "svelte-hero-icons";
+    import {onMount} from "svelte";
+
     let currentYear = new Date().getFullYear();
+    export let data;
 </script>
 
 <svelte:head>
@@ -20,14 +23,19 @@
 <section class="hero-section flex flex-col items-center justify-center h-screen text-white">
     <div class="filter"></div>
     <div class="text-center">
-        <h2 class="text-4xl font-bold mb-2">Discover and Share Flavors</h2>
+        <h2 class="text-4xl font-bold mb-2">Your Digital Cookbook</h2>
         <p class="text-lg text-gray-300 mb-4">Unveil Culinary Traditions with Recipio</p>
-        <a href="/auth/signup" class="btn variant-filled">Create an Account</a>
-        <p class="mt-4">or <a href="/auth/login" class="text-primary font-bold">login</a> to access your Dashboard</p>
+        {#if data.user}
+            <a href="/dashboard" class="btn variant-filled">Access Dashboard</a>
+        {:else}
+            <a href="/auth/signup" class="btn variant-filled">Create an Account</a>
+            <p class="mt-4">or <a href="/auth/login" class="text-primary font-bold">login</a> to access your Dashboard
+            </p>
+        {/if}
     </div>
 </section>
 <div class="mx-auto gap-8 pt-5">
-    <!-- Section 2: Text and SVG Mockup -->
+    <!-- Section 2: Personal Page Section-->
     <section class="flex items-center px-5 py-16 lg:py-20">
         <div class="container mx-auto flex flex-col lg:flex-row items-center justify-between">
             <div class="lg:w-1/2 text-center lg:text-left">
@@ -38,7 +46,23 @@
                 <p class="text-gray-700 leading-relaxed mb-6">Imagine sharing your passion for cooking with the world.
                     As you curate your recipes, they seamlessly find a home on your public profile. And here's the best
                     part: your profile link is as simple as <span class="font-semibold">recipio.fr/username</span>.</p>
+
+                <!-- Key reasons to create a Recipio profile -->
+                <h3 class="text-2xl font-semibold text-primary mb-4 mt-6">Why Create a Recipio Profile?</h3>
+                <ul class="list-disc list-inside mb-4">
+                    <li class="text-gray-700 leading-relaxed">Get a dedicated spot for all your recipes, from family
+                        secrets to new experiments.
+                    </li>
+                    <li class="text-gray-700 leading-relaxed">No more messy handwritten notes. Keep all your recipes
+                        organized and digital.
+                    </li>
+                    <li class="text-gray-700 leading-relaxed">Share recipes with just a link, no more copying or
+                        retyping for friends and family.
+                    </li>
+                </ul>
+
                 <p class="text-gray-700 leading-relaxed">Ready to showcase your culinary artistry?</p>
+                <a href="/auth/signup" class="btn variant-filled mt-4">Start Your Journey</a>
             </div>
             <div class="mt-10 lg:mt-0 flex justify-center relative">
                 <img src="/images/phone-mockup.png" alt="iPhone Mock"
@@ -54,7 +78,7 @@
         <div class="banner"></div>
         <div class="container mx-auto text-center py-16">
             <h3 class="text-3xl font-semibold mb-8">Our Functionalities</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12">
                 <div class="bg-white/75 p-6 rounded-lg shadow-md flex flex-col items-center">
                     <Icon src={UserCircle} class="w-12 h-12 mb-4" alt="Create Account Icon"/>
                     <h4 class="text-xl font-semibold mb-2">Create an Account</h4>
@@ -73,20 +97,87 @@
                     <p class="text-gray-600">Connect with food enthusiasts and share your culinary creations across the
                         community.</p>
                 </div>
+                <div class="bg-white/75 p-6 rounded-lg shadow-md flex flex-col items-center">
+                    <Icon src={Users} class="w-12 h-12 mb-4" alt="Family Icon"/>
+                    <h4 class="text-xl font-semibold mb-2">Create Family Recipe Pages</h4>
+                    <p class="text-gray-600">Initiate a family tradition by curating a unique recipe page. Add members
+                        and keep the legacy of family recipes alive.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Section 4: Another Image and Texts -->
-    <section class="stepper-section flex flex-col">
-        <div class="banner"></div>
-        <div class="container mx-auto text-center py-16">
-            <h3 class="text-3xl font-semibold mb-8">Start Sharing Your Culinary Journey</h3>
-            <div class="mx-auto">
-                <p class="text-gray-600">Embark on a culinary adventure with Recipio. Share your recipes, connect with
-                    fellow food enthusiasts, and create a digital legacy of your culinary creations. Join our community
-                    today and celebrate the art of cooking like never before.</p>
-                <a href="/auth/signup" class="btn variant-filled mt-4">Get Started</a>
+    <!-- Section 4: Family Recipes & Members -->
+    <section class="family-section flex flex-col bg-white/75 py-16">
+        <div class="container mx-auto text-center">
+            <h3 class="text-3xl font-semibold mb-12">Build & Cherish Your Family's Culinary Legacy</h3>
+
+            <!-- Benefits Typography -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <div class="space-y-4">
+                    <h4 class="text-xl font-medium">Preserve Generations</h4>
+                    <p class="text-gray-600">Protect and cherish your culinary knowledge for future generations.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="text-xl font-medium">Private Family Space</h4>
+                    <p class="text-gray-600">A dedicated space for family members to share and discover recipes.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="text-xl font-medium">Strengthen Bonds</h4>
+                    <p class="text-gray-600">Unite your family through shared cooking experiences and stories.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="text-xl font-medium">Anywhere Access</h4>
+                    <p class="text-gray-600">Retrieve your cherished recipes whenever you want, from wherever you
+                        are.</p>
+                </div>
+            </div>
+
+            <!-- Image and Quote -->
+            <div class="flex flex-col md:flex-row items-center justify-between my-12 space-y-8 md:space-y-0">
+                <img src="https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2874&q=80"
+                     alt="Family cooking together" class="w-full md:w-1/2 rounded shadow-md">
+
+                <!-- Quote -->
+                <div class="w-full md:w-1/2 md:pl-10">
+                    <blockquote class="font-serif text-2xl italic text-gray-700 border-l-4 pl-4 border-surface-500">
+                        "Every recipe tells a story. From grandma's famous pie to your twist on a traditional dish,
+                        Recipio helps you share it with the world."
+                    </blockquote>
+                </div>
+            </div>
+
+            <!-- Steps using Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
+                <div class="p-6 rounded shadow-md bg-white">
+                    <h4 class="font-medium text-xl mb-4">1. Set up your family page</h4>
+                    <p>Choose a custom name and share your story.</p>
+                </div>
+
+                <div class="p-6 rounded shadow-md bg-white">
+                    <h4 class="font-medium text-xl mb-4">2. Invite your family</h4>
+                    <p>Let them join using their Recipio accounts.</p>
+                </div>
+
+                <div class="p-6 rounded shadow-md bg-white">
+                    <h4 class="font-medium text-xl mb-4">3. Start adding recipes</h4>
+                    <p>Tag them to the family page and cherish your culinary legacy.</p>
+                </div>
+
+                <div class="p-6 rounded shadow-md bg-white">
+                    <h4 class="font-medium text-xl mb-4">4. Collaborate and Grow</h4>
+                    <p>Let members contribute and watch your unique collection expand.</p>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center">
+                <p class="text-gray-600 leading-relaxed mb-6">Be part of the growing community preserving and
+                    celebrating their culinary heritage with Recipio.</p>
+                <a href="/auth/signup" class="btn variant-filled">Get Started</a>
             </div>
         </div>
     </section>
@@ -129,8 +220,8 @@
         background-image: url("https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80");
     }
 
-    .stepper-section .banner {
-        background-image: url("https://images.unsplash.com/photo-1495521821757-a1efb6729352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format");
-    }
+    /*.family .banner {*/
+    /*    background-image: url("https://images.unsplash.com/photo-1495521821757-a1efb6729352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format");*/
+    /*}*/
 
 </style>

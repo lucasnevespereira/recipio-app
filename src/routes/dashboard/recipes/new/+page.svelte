@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {FileDropzone, InputChip} from '@skeletonlabs/skeleton';
+    import {FileDropzone, InputChip, ListBox, ListBoxItem} from '@skeletonlabs/skeleton';
     import RichEditor from '$lib/components/RichEditor/RichEditor.svelte';
     import {error} from '@sveltejs/kit';
     import {pb, currentUser} from '$lib/pocketbase';
@@ -13,6 +13,7 @@
     let description = '';
     let ingredientsList: string[] = [];
     let instructions = '';
+    let familiesList: string[] = [];
 
 
     const createRecipe = async () => {
@@ -25,6 +26,10 @@
         formData.append('description', description);
         formData.append('instructions', instructions);
         formData.append('slug', slugify(title))
+
+        familiesList.forEach((value, index) => {
+            formData.append(`families[${index}]`, value);
+        });
 
         const recipeIngredients = {};
         ingredientsList.forEach((element, index) => {
@@ -84,7 +89,7 @@
                         placeholder="Describe your recipe"></textarea>
             </label>
 
-            <label class="label mb-3" for="">
+            <label class="label mb-3">
                 <span>Image</span>
                 <FileDropzone name="files" bind:files>
                     <svelte:fragment slot="message">Upload a <b>recipe image</b></svelte:fragment>
@@ -97,9 +102,21 @@
                     </div>
                 {/if}
             </label>
+
+            {#if data.families.length > 0}
+                <label class="label mb-3">
+                    <span>Add to Family</span>
+                    <ListBox multiple>
+                        {#each data.families as family}
+                            <ListBoxItem bind:group={familiesList} name="medium"
+                                         value={family.id}>{family.name}</ListBoxItem>
+                        {/each}
+                    </ListBox>
+                </label>
+            {/if}
         </div>
         <div class="right">
-            <label class="label mb-3" for="ingredients">
+            <label class="label mb-3">
                 <span>Ingredients</span>
                 <InputChip
                         bind:value={ingredientsList}

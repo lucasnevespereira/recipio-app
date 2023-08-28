@@ -8,7 +8,7 @@ export const load: LayoutServerLoad = async ({locals, params}) => {
     }
     const getRecipe = async (recipeId: string) => {
         try {
-            const recipe = await locals.pb.collection('recipes').getOne(recipeId);
+            const recipe = await locals.pb.collection('recipes').getOne(recipeId, {expand: "families"});
             return structuredClone(recipe)
         } catch (e) {
             console.log(e)

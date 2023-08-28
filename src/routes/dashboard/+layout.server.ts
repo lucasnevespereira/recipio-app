@@ -2,7 +2,7 @@ import type {LayoutServerLoad} from "../../../.svelte-kit/types/src/routes/$type
 import {redirect} from "@sveltejs/kit";
 
 
-export const load: LayoutServerLoad = async ({ locals }) => {
+export const load: LayoutServerLoad = async ({locals}) => {
     if (!locals.pb.authStore.isValid) {
         throw redirect(303, '/auth/login');
     }
@@ -21,7 +21,23 @@ export const load: LayoutServerLoad = async ({ locals }) => {
         }
     };
 
+    const getFamilies = async () => {
+        try {
+            return structuredClone(
+                await locals.pb.collection("families").getFullList({
+                    sort: '-created',
+                    filter: `members ~ "${locals.user?.id}" || creator = "${locals.user?.id}"`,
+                    expand: 'members, creator'
+                })
+            );
+        } catch (e) {
+            console.log(e);
+            throw e;
+        }
+    };
+
     return {
         recipes: getRecipes(),
+        families: getFamilies()
     };
 }
