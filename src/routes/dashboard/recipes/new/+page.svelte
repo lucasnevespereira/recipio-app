@@ -48,7 +48,6 @@
         }
 
         try {
-            console.log("formdata", formData)
             await pb.collection('recipes').create(formData);
         } catch (e) {
             console.log(e);
@@ -62,86 +61,141 @@
         }
 
         sendToast('Recipe Created');
-        // window.location.href = "/dashboard/recipes"
+        window.location.href = "/dashboard/recipes"
     };
 </script>
 
 <div class="flex items-center justify-between">
     <a class="flex items-center h4" href="/dashboard/recipes">
         <Icon src={ArrowLeft} class="w-4 h-4"/>
-        <span class="ml-1">
-                Back to Recipes
-	</span>
+        <span class="ml-1">Back to Recipes</span>
     </a>
-
-    <button type="button" on:click={createRecipe} class="btn variant-filled"> Create Recipe</button>
+    <button type="button" on:click={createRecipe} class="btn variant-filled">Create Recipe</button>
 </div>
 
+<div class="form-wrapper">
 
-<form>
-    <div class="grid lg:grid-cols-2 grid-cols-1 lg:grid-rows-1 lg:gap-6">
-        <div class="left">
-            <label class="label mb-3">
-                <span>Title</span>
-                <input class="input" type="text" bind:value={title} placeholder="Recipe Title"/>
-            </label>
-
-            <label class="label mb-3">
-                <span>Description</span>
-                <textarea
-                        class="textarea"
-                        bind:value={description}
-                        rows="4"
-                        placeholder="Describe your recipe"></textarea>
-            </label>
-
-            <label class="label mb-3">
-                <span>Image</span>
-                <FileDropzone name="files" bind:files>
-                    <svelte:fragment slot="message">Upload a <b>recipe image</b></svelte:fragment>
-                </FileDropzone>
-                {#if files && files.item(0).name}
-                    <div class="card p-4 w-100">
-						<span class="preview">
-							{files[0].name}
-						</span>
-                    </div>
-                {/if}
-            </label>
-
-            {#if data.families.length > 0}
+    <!-- Basic Information Section -->
+    <section class="form-section">
+        <h2>Basic Information</h2>
+        <div class="grid grid-cols-1 lg:grid-rows-1 lg:gap-6">
+            <div>
                 <label class="label mb-3">
-                    <span>Add to Family</span>
-                    <ListBox multiple>
-                        {#each data.families as family}
-                            <ListBoxItem bind:group={familiesList} name="medium"
-                                         value={family.id}>{family.name}</ListBoxItem>
-                        {/each}
-                    </ListBox>
+                    <span>Title</span>
+                    <input class="input" type="text" bind:value={title} placeholder="Recipe Title"/>
                 </label>
-            {/if}
-        </div>
-        <div class="right">
-            <label class="label mb-3">
-                <span>Ingredients</span>
-                <InputChip
-                        bind:value={ingredientsList}
-                        name="ingredients"
-                        placeholder="Enter recipe ingredients..."
-                />
-            </label>
-            <label class="label mb-3">
-                <span>Instructions</span>
-                <RichEditor bind:editorValue={instructions}/>
-                <textarea name="instructions" class="hidden" bind:value={instructions}></textarea>
-            </label>
 
-            <div class="mt-10">
-                <button type="button" on:click={createRecipe} class="btn variant-filled"
-                >Create Recipe
-                </button
-                >
+                <label class="label mb-3">
+                    <span>Description</span>
+                    <textarea class="textarea" bind:value={description} rows="4"
+                              placeholder="Describe your recipe"></textarea>
+                </label>
+
+                <label class="label mb-3">
+                    <span>Image</span>
+                    <FileDropzone name="files" bind:files>
+                        <svelte:fragment slot="message">Upload a <b>recipe image</b></svelte:fragment>
+                    </FileDropzone>
+                    {#if files && files.item(0).name}
+                        <div class="card p-4 w-100">
+                            <span class="preview">{files[0].name}</span>
+                        </div>
+                    {/if}
+                </label>
             </div>
         </div>
+    </section>
+
+    <!-- Ingredients & Instructions Section -->
+    <section class="form-section">
+        <h2>Recipe Details</h2>
+        <div class="grid grid-cols-1 lg:grid-rows-1 lg:gap-6">
+            <div>
+                <label class="label mb-3">
+                    <span>Ingredients</span>
+                    <InputChip bind:value={ingredientsList} name="ingredients"
+                               placeholder="Enter recipe ingredients..."/>
+                </label>
+
+                <label class="label mb-3">
+                    <span>Instructions</span>
+                    <RichEditor bind:editorValue={instructions}/>
+                    <textarea name="instructions" class="hidden" bind:value={instructions}></textarea>
+                </label>
+            </div>
+        </div>
+    </section>
+    {#if data.families.length > 0}
+        <!-- Families Association Section -->
+        <section class="form-section">
+            <h2>Association</h2>
+            <div class="grid grid-cols-1 lg:grid-rows-1 lg:gap-6">
+                <div>
+
+                    <label class="label mb-3">
+                        <span>Add to Family</span>
+                        <ListBox multiple>
+                            {#each data.families as family}
+                                <ListBoxItem bind:group={familiesList} name="medium"
+                                             value={family.id}>{family.name}</ListBoxItem>
+                            {/each}
+                        </ListBox>
+                    </label>
+
+                </div>
+            </div>
+        </section>
+    {/if}
+
+    <div class="form-section-action">
+        <button type="button" on:click={createRecipe} class="btn variant-filled">Create Recipe</button>
     </div>
-</form>
+</div>
+
+<style>
+    .form-wrapper {
+        padding: 0 1rem;
+    }
+
+    .form-section {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    h2 {
+        font-size: 1.2rem; /* Reduced font size for mobile */
+        margin-bottom: 1rem;
+    }
+
+    .form-section-action {
+        margin-top: 2rem;
+    }
+
+    /* Adjustments for tablet screens */
+    @media (min-width: 768px) {
+        .form-wrapper {
+            padding: 0 2rem; /* Increased padding for tablets */
+        }
+
+        h2 {
+            font-size: 1.4rem; /* Increased font size for tablets */
+        }
+    }
+
+    /* Adjustments for desktop screens */
+    @media (min-width: 1024px) {
+        .form-wrapper {
+            padding: 0 5rem; /* Increased padding for desktop */
+        }
+
+        .form-section {
+            margin-bottom: 3rem; /* Increased space between sections for clarity */
+        }
+
+        h2 {
+            font-size: 1.5rem; /* Restored font size for desktop */
+        }
+    }
+</style>
+
