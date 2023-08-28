@@ -27,9 +27,14 @@
         formData.append('instructions', instructions);
         formData.append('slug', slugify(title))
 
-        familiesList.forEach((value, index) => {
-            formData.append(`families[${index}]`, value);
+        familiesList.forEach(family => {
+            formData.append("families", family);
         });
+
+        const families = formData.getAll("families")
+        if (families.length === 0) {
+            formData.append("families", "")
+        }
 
         const recipeIngredients = {};
         ingredientsList.forEach((element, index) => {
@@ -43,6 +48,7 @@
         }
 
         try {
+            console.log("formdata", formData)
             await pb.collection('recipes').create(formData);
         } catch (e) {
             console.log(e);
@@ -56,7 +62,7 @@
         }
 
         sendToast('Recipe Created');
-        window.location.href = "/dashboard/recipes"
+        // window.location.href = "/dashboard/recipes"
     };
 </script>
 
@@ -130,7 +136,7 @@
                 <textarea name="instructions" class="hidden" bind:value={instructions}></textarea>
             </label>
 
-            <div class="lg:invisible mt-10">
+            <div class="mt-10">
                 <button type="button" on:click={createRecipe} class="btn variant-filled"
                 >Create Recipe
                 </button

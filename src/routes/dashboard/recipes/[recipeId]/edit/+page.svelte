@@ -3,14 +3,13 @@
     import RichEditor from "$lib/components/RichEditor/RichEditor.svelte";
     import {ArrowLeft, Icon} from "svelte-hero-icons";
     import {onMount} from "svelte";
-    import {currentUser, pb} from "$lib/pocketbase";
+    import {pb} from "$lib/pocketbase";
     import {sendToast} from "$lib/utils/toast";
     import {error} from "@sveltejs/kit";
 
     export let data;
     let files: FileList;
     let ingredientsTmpList = [];
-    let familiesList = data.recipe.families
 
     onMount(() => {
         // Initialize temporaryList with data.recipe.ingredients if it exists
@@ -30,12 +29,18 @@
         formData.append("description", data.recipe.description)
         formData.append("instructions", data.recipe.instructions)
 
-        familiesList.forEach((value, index) => {
-            formData.append(`families[${index}]`, value);
+        data.recipe.families.forEach(family => {
+            formData.append("families", family);
         });
+        
+        const families = formData.getAll("families")
+        if (families.length === 0) {
+            formData.append("families", "")
+        }
 
         const recipeIngredients = {};
         ingredientsTmpList.forEach((element, index) => {
+            console.log(element)
             recipeIngredients[index] = element;
         });
 
@@ -45,7 +50,13 @@
             formData.append("photo", files.item(0))
         }
 
+        console.log("families", formData.getAll("families"))
+
         try {
+            console.log("form data")
+            for (let [key, value] of formData.entries()) {
+                console.log(key, value);
+            }
             await pb.collection('recipes').update(data.recipe.id, formData);
             sendToast('Recipe Updated');
         } catch (e) {
@@ -110,12 +121,12 @@
 
             </label>
 
-            {#if data.recipe.families.length > 0}
+            {#if data.families.length > 0}
                 <label class="label mb-3">
                     <span>Add to Family</span>
                     <ListBox multiple>
-                        {#each data.recipe.expand.families as family}
-                            <ListBoxItem bind:group={familiesList} name="medium"
+                        {#each data.families as family}
+                            <ListBoxItem bind:group={data.recipe.families} name="families"
                                          value={family.id}>{family.name}</ListBoxItem>
                         {/each}
                     </ListBox>
@@ -124,7 +135,7 @@
 
         </div>
         <div class="right">
-            <label class="label mb-3" for="ingredients">
+            <label class="label mb-3">
                 <span>Ingredients</span>
                 <InputChip
                         bind:value={ingredientsTmpList}
