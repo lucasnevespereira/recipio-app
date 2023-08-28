@@ -5,8 +5,14 @@
     import {error} from "@sveltejs/kit";
     import {slugify} from "$lib/utils/text";
     import RichEditor from "$lib/components/RichEditor/RichEditor.svelte";
+    import {SlideToggle} from "@skeletonlabs/skeleton";
 
     export let data;
+    let showAuthors = data.family.show_authors
+
+    const toggleShowAuthors = () => {
+        showAuthors = !showAuthors
+    }
     const updateFamily = async () => {
         if (!data.family.id) {
             throw error("no family id");
@@ -21,6 +27,7 @@
         formData.append('about_content', data.family.about_content)
         formData.append('menu_about_name', data.family.menu_about_name);
         formData.append('menu_recipes_name', data.family.menu_recipes_name);
+        formData.append('show_authors', JSON.stringify(showAuthors))
 
 
         try {
@@ -59,11 +66,18 @@
                 </label>
                 <label class="label mb-3">
                     <span>Page Title</span>
-                    <input class="input" type="text" bind:value={data.family.page_title} placeholder="Enter page title"/>
+                    <input class="input" type="text" bind:value={data.family.page_title}
+                           placeholder="Enter page title"/>
                 </label>
                 <label class="label mb-3">
                     <span>Page Slug</span>
                     <input class="input" type="text" bind:value={data.family.slug} placeholder="Enter page slug"/>
+                </label>
+                <label class="label mb-3 flex flex-col">
+                    <span>Show Authors</span>
+                    <SlideToggle name="show_authors"
+                                 size="sm"
+                                 on:click={toggleShowAuthors}>{showAuthors ? "Yes" : "No"}</SlideToggle>
                 </label>
             </div>
         </div>
@@ -75,7 +89,8 @@
             <div>
                 <label class="label mb-3">
                     <span>Page About Title</span>
-                    <input class="input" type="text" bind:value={data.family.about_title} placeholder="Enter page about title"/>
+                    <input class="input" type="text" bind:value={data.family.about_title}
+                           placeholder="Enter page about title"/>
                 </label>
                 <label class="label mb-3">
                     <span>Page About Content</span>
@@ -97,7 +112,8 @@
                 </label>
                 <label class="label mb-3">
                     <span>About Menu Name</span>
-                    <input class="input" type="text" bind:value={data.family.menu_about_name} placeholder="Enter about menu name"/>
+                    <input class="input" type="text" bind:value={data.family.menu_about_name}
+                           placeholder="Enter about menu name"/>
                 </label>
             </div>
         </div>

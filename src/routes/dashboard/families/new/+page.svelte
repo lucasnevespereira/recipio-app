@@ -5,6 +5,7 @@
     import {slugify, generateInviteToken} from "$lib/utils/text";
     import {ArrowLeft, Icon} from "svelte-hero-icons";
     import RichEditor from "$lib/components/RichEditor/RichEditor.svelte";
+    import {SlideToggle} from "@skeletonlabs/skeleton";
 
     export let data
     let familyName = '';
@@ -14,6 +15,11 @@
     let pageAboutContent = '';
     let recipesMenuName = '';
     let aboutMenuName = ''
+    let showAuthors = false
+
+    const toggleShowAuthors = () => {
+        showAuthors = !showAuthors
+    }
 
     const createFamily = async () => {
         if (!data.user.id) {
@@ -29,6 +35,7 @@
         formData.append('about_content', pageAboutContent);
         formData.append('menu_about_name', aboutMenuName);
         formData.append('menu_recipes_name', recipesMenuName);
+        formData.append('show_authors', JSON.stringify(showAuthors))
 
         try {
             const family = await pb.collection('families').create(formData);
@@ -72,10 +79,17 @@
                     <span>Page Title</span>
                     <input class="input" type="text" bind:value={pageTitle} placeholder="Enter page title"/>
                 </label>
-                <label class="label mb-3">
+                <label class="label mb-4">
                     <span>Page Slug</span>
                     <input class="input" type="text" bind:value={slug} placeholder="Enter page slug"/>
                 </label>
+                <label class="label mb-3 flex flex-col">
+                    <span>Show Authors</span>
+                    <SlideToggle name="show_authors"
+                                 size="sm"
+                                 on:click={toggleShowAuthors}>{showAuthors ? "Yes" : "No"}</SlideToggle>
+                </label>
+
             </div>
         </div>
     </section>
