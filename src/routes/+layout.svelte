@@ -54,7 +54,8 @@
     <AppShell slotSidebarLeft="w-0 md:w-52 bg-surface-500/10">
         <svelte:fragment slot="header">
             <AppBar background={isDashboard ? "bg-surface-200" : "bg-surface-200-opacity-50"}
-                    regionRowMain={!isDashboard && "absolute w-full px-10 py-4 bg-surface-filter-500 shadow-sm"} padding={!isDashboard ? "p-0" : "p-4"}>
+                    regionRowMain={!isDashboard && "absolute w-full px-10 py-4 bg-surface-filter-500 shadow-sm"}
+                    padding={!isDashboard ? "p-0" : "p-4"}>
                 <svelte:fragment slot="lead">
                     {#if isDashboard}
                         <div class="burger-menu">
@@ -120,7 +121,7 @@
                     {:else }
                         <div class="flex">
                             <a href="/auth/login" class="btn variant-filled mr-2">Login</a>
-                            <a href="/auth/signup" class="btn variant-filled mr-2">Signup</a>
+                            <!-- <a href="/auth/signup" class="btn variant-filled mr-2">Signup</a>-->
                         </div>
                     {/if}
                 </svelte:fragment>

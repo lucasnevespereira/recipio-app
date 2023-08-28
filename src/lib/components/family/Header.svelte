@@ -28,9 +28,9 @@
         <div class="lg:hidden bg-surface-200 pt-2 z-60 pb-4 shadow-md">
             <div class="px-2 space-y-1 sm:px-3">
                 <a href={`/family/${family.slug}`}
-                   class="text-primary block px-3 py-2 rounded-md text-base font-medium">Recipes</a>
+                   class="text-primary block px-3 py-2 rounded-md text-base font-medium">{family.menu_recipes_name}</a>
                 <a href={`/family/${family.slug}/about`}
-                   class="text-primary block px-3 py-2 rounded-md text-base font-medium">About</a>
+                   class="text-primary block px-3 py-2 rounded-md text-base font-medium">{family.menu_about_name}</a>
             </div>
         </div>
     {/if}
