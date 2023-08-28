@@ -1,0 +1,32 @@
+{
+  "name": "Recipio",
+  "short_name": "Recipio",
+  "description": "Recipio is an online platform tailored for families and cooking enthusiasts to effortlessly share and discover recipes.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#D8D9FC",
+  "theme_color": "#D8D9FC",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
