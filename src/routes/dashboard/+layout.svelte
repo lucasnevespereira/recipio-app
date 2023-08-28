@@ -20,7 +20,7 @@
         <Navigation/>
     </svelte:fragment>
 
-    <div class="container p-10 mx-auto">
+    <div class="container p-4 lg:p-10 mx-auto">
         <slot/>
     </div>
 </AppShell>

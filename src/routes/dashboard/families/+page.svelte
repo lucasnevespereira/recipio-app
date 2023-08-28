@@ -107,60 +107,63 @@
     </div>
 {/if}
 
-{#each data.families as family}
-    <div class="card p-4 grid md:grid-cols-4 gap-4 items-center content-center">
-        <!-- Titles -->
-        <div class="font-semibold text-primary hidden md:block">Name</div>
-        <div class="font-semibold text-primary hidden md:block">Members</div>
-        <div class="font-semibold text-primary hidden md:block">Creator</div>
-        <div class="font-semibold text-primary hidden md:block"></div>
 
+{#each data.families as family}
+    <div class="card p-4 grid grid-cols-1 md:grid-cols-4 gap-4 items-center content-center transition-colors duration-150">
         <!-- Family Name column -->
-        <div class="flex flex-col md:flex-row items-center md:space-y-0 md:space-x-0">
-            <div class="font-semibold text-primary md:hidden">Name</div>
-            <div class="text-center">{family.name}</div>
+        <div class="flex flex-col items-center md:items-start space-y-2">
+            <div class="font-semibold text-primary hidden md:block mb-2">Name</div>
+            <div>{family.name}</div>
         </div>
 
         <!-- Members column -->
         <a href={`/dashboard/families/${family.id}/members`}
-           class="flex flex-col hover:cursor-pointer md:flex-row items-center md:space-y-0 md:space-x-0">
-            <div class="font-semibold text-primary md:hidden">Members</div>
-            <div class="flex space-x-2">
-                {#if family.expand.members}
-                    {#each family.expand.members as member}
-                        <UserAvatar
-                                collectionId={member?.collectionId}
-                                userId={member?.id}
-                                avatar={member?.avatar}
-                                username={member.username}/>
-                    {/each}
-                {:else}
-                    <p class="text-center">None</p>
+           class="hidden md:flex flex-col items-center hover:cursor-pointer justify-start space-x-2">
+            <div class="font-semibold text-primary hidden md:block mb-2">Members</div>
+            {#if family.expand.members && family.expand.members.length}
+                {#each family.expand.members.slice(0, 3) as member}
+                    <UserAvatar
+                            collectionId={member?.collectionId}
+                            userId={member?.id}
+                            avatar={member?.avatar}
+                            username={member.username}
+                            width="w-8"
+                    />
+                {/each}
+                {#if family.expand.members.length > 3}
+                    <div>+{family.expand.members.length - 3} more</div>
                 {/if}
-            </div>
+            {:else}
+                <p>None</p>
+            {/if}
         </a>
 
         <!-- Creator column -->
-        <div class="flex flex-col md:flex-row items-center md:space-y-0 md:space-x-0">
-            <div class="font-semibold text-primary md:hidden">Creator</div>
+        <div class="hidden md:flex flex-col items-center">
+            <div class="font-semibold text-primary hidden md:block mb-2">Creator</div>
             <UserAvatar
+                    width="w-8"
                     collectionId={family.expand.creator?.collectionId}
                     userId={family.expand.creator?.id}
                     avatar={family.expand.creator?.avatar}
-                    username={family.expand.creator?.username}/>
+                    username={family.expand.creator?.username}
+            />
         </div>
 
-        <div class="flex flex-col md:flex-row items-center md:space-y-0 md:space-x-0 gap-2 relative">
-            <div class="font-semibold text-primary md:hidden md:space-x-2">Actions</div>
-            <a href={`/family/${family.slug}`} target="_blank" class="btn variant-ghost-secondary btn-sm w-50 mr-3">
+        <!-- Actions column -->
+        <div class="flex items-center relative justify-center space-x-2 md:space-x-4">
+            <a href={`/family/${family.slug}`} target="_blank"
+               class="btn variant-ghost-secondary btn-sm w-50 md:w-auto md:mr-3">
                 <span>Page</span>
-                <span><Icon src={ArrowUpRight} class="w-4 h-4"/></span>
+                <Icon src={ArrowUpRight} class="w-4 h-4 ml-1"/>
             </a>
             <button on:click|stopPropagation={() => openPopoverId = family.id}>
                 <Icon src={EllipsisVertical} class="w-6 h-6"/>
             </button>
-            <Popup top="-20px" right="5px" isOpen={openPopoverId === family.id}
+            <Popup top="25px" right="5px" isOpen={openPopoverId === family.id}
                    closePopover={() => openPopoverId = null}>
+                <a href={`/dashboard/families/${family.id}/members`}
+                   class="block py-2 px-4 hover:bg-secondary-100 rounded">Members</a>
                 {#if family.creator === data.user.id}
                     <a href={`/dashboard/families/${family.id}/edit`}
                        class="block py-2 px-4 hover:bg-secondary-100 rounded">Edit</a>
@@ -176,4 +179,3 @@
         </div>
     </div>
 {/each}
-
