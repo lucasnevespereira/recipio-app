@@ -5,9 +5,11 @@
     import {page} from "$app/stores";
 
     export let data;
-    let viewMode = "gallery";
+    let viewMode;
     onMount(() => {
-        viewMode = localStorage.getItem('viewMode') || "gallery";
+        if (typeof window !== 'undefined') {
+            viewMode = localStorage.getItem('viewMode') || "gallery";
+        }
     });
 
     const {url} = $page;

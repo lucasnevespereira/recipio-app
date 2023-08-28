@@ -1,6 +1,5 @@
 <script>
     import {getImageURL} from "$lib/utils/image";
-    import {goto} from "$app/navigation";
     import {page} from "$app/stores";
     import ViewModeToggle from "$lib/components/ViewModeToggle.svelte";
     import {onMount} from "svelte";
@@ -8,9 +7,11 @@
 
     const {url} = $page;
     export let data;
-    let viewMode = "gallery";
+    let viewMode;
     onMount(() => {
-        viewMode = localStorage.getItem('viewMode') || "gallery";
+        if (typeof window !== 'undefined') {
+            viewMode = localStorage.getItem('viewMode') || "gallery";
+        }
     });
 </script>
 

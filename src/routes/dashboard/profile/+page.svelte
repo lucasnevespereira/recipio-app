@@ -4,21 +4,34 @@
     import {applyAction, enhance} from "$app/forms";
     import {Avatar} from "@skeletonlabs/skeleton";
     import {ArrowUpRight, Icon, Pencil, PencilSquare} from "svelte-hero-icons";
+    import {onMount} from "svelte";
 
     export let data;
     export let form;
-    let loading
-    $: loading = false
-    const showPreview = (event) => {
-        const target = event.target
-        const files = target.files
+    let iframeSrc;
 
-        if (files.length > 0) {
-            const src = URL.createObjectURL(files[0])
-            const preview = document.getElementById('avatar-preview')
-            preview.src = src
-        }
+    onMount(() => {
+        iframeSrc = `${window.location.protocol}//${window.location.host}/${data.user.username}`;
+    });
+
+    let loading
+    $: if (typeof window !== 'undefined') {
+        loading = false;
     }
+
+
+    const showPreview = (event) => {
+        if (typeof document !== 'undefined') {
+            const target = event.target;
+            const files = target.files;
+
+            if (files.length > 0) {
+                const src = URL.createObjectURL(files[0]);
+                const preview = document.getElementById('avatar-preview');
+                preview.src = src;
+            }
+        }
+    };
 
     const submitUpdateProfile = () => {
         loading = true
@@ -68,7 +81,8 @@
                             id="avatar-preview"
                             class="w-32 rounded"
                     />
-                    <Icon src={PencilSquare} size="32" class="absolute bottom-1 right-1 p-1 text-white bg-primary-500 rounded-full"/>
+                    <Icon src={PencilSquare} size="32"
+                          class="absolute bottom-1 right-1 p-1 text-white bg-primary-500 rounded-full"/>
                 </label>
                 <input
                         type="file"
@@ -100,8 +114,7 @@
     </div>
     <div class="flex flex-row mx-auto pt-10 lg:p-0">
         <iframe title="preview-iframe" id="preview-iframe" class="preview-iframe"
-                src={`${window.location.protocol}//${window.location.host}/${data.user.username}`}
-                sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
+                src={iframeSrc} sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
     </div>
 </div>
 
