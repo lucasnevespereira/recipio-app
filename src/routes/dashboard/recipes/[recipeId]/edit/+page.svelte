@@ -10,6 +10,8 @@
     export let data;
     let files: FileList;
     let ingredientsTmpList = [];
+    let fileSizeError = "";
+    const maxFileSize = 5242880;
 
     onMount(() => {
         // Initialize temporaryList with data.recipe.ingredients if it exists
@@ -17,6 +19,17 @@
             ingredientsTmpList = Object.values(data.recipe.ingredients);
         }
     });
+
+    const checkFileSize = () => {
+        if (files && files.item(0)) {
+            const fileSize = files.item(0).size;
+            if (fileSize > maxFileSize) {
+                fileSizeError = "File size too large (exceeds the 5MB limit.)";
+            } else {
+                fileSizeError = "";
+            }
+        }
+    };
 
     const updateRecipe = async () => {
         if (!data.user.id) {
@@ -96,9 +109,14 @@
 
                 <label class="label mb-3">
                     <span>Image</span>
-                    <FileDropzone name="files" bind:files>
+                    <FileDropzone name="files" bind:files on:change={checkFileSize}>
                         <svelte:fragment slot="message">Upload a <b>recipe image</b></svelte:fragment>
                     </FileDropzone>
+                    {#if fileSizeError}
+                        <div class="text-error-500">
+                            {fileSizeError}
+                        </div>
+                    {/if}
 
                     {#if data.recipe.photo && !files}
                         <div class="card p-4 w-100">
@@ -106,7 +124,7 @@
                         </div>
                     {/if}
 
-                    {#if files && files.item(0)}
+                    {#if files && files.item(0) && files.item(0).size < maxFileSize}
                         <div class="card p-4 w-100">
                             <span class="preview">{files.item(0).name}</span>
                         </div>

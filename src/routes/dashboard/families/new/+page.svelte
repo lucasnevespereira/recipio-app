@@ -13,10 +13,10 @@
     let familyName = '';
     let pageTitle = '';
     let slug = '';
-    let pageAboutTitle = ''
+    let pageAboutTitle = 'About Us'
     let pageAboutContent = '';
-    let recipesMenuName = '';
-    let aboutMenuName = ''
+    let recipesMenuName = 'Recipes';
+    let aboutMenuName = 'About'
     let showAuthors = false
     let loading;
 
@@ -30,6 +30,14 @@
             throw error("no user id");
         }
         let formData = new FormData();
+
+        if (slug.length === 0) {
+            slug = familyName
+        }
+        if (pageTitle.length === 0) {
+            pageTitle = familyName
+        }
+
         formData.append('name', familyName);
         formData.append('page_title', pageTitle);
         formData.append('slug', slugify(slug))

@@ -17,6 +17,21 @@
     let familiesList: string[] = [];
     let loading;
 
+    let fileSizeError = "";
+
+    const checkFileSize = () => {
+        if (files && files.item(0)) {
+            const fileSize = files.item(0).size;
+            const maxFileSize = 5242880; // 5MB in bytes
+
+            if (fileSize > maxFileSize) {
+                fileSizeError = "File size too large (exceeds the 5MB limit.)";
+            } else {
+                fileSizeError = "";
+            }
+        }
+    };
+
     const createRecipe = async () => {
         loading = true;
         if (!data.user.id) {
@@ -94,10 +109,15 @@
 
                 <label class="label mb-3">
                     <span>Image</span>
-                    <FileDropzone name="files" bind:files>
+                    <FileDropzone name="files" bind:files on:change={checkFileSize}>
                         <svelte:fragment slot="message">Upload a <b>recipe image</b></svelte:fragment>
                     </FileDropzone>
-                    {#if files && files.item(0).name}
+                    {#if fileSizeError}
+                        <div class="text-error-500">
+                            {fileSizeError}
+                        </div>
+                    {/if}
+                    {#if files && files.item(0).name && fileSizeError.length === 0}
                         <div class="card p-4 w-100">
                             <span class="preview">{files[0].name}</span>
                         </div>
