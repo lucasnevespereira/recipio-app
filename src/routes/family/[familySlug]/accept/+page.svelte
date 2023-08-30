@@ -12,6 +12,7 @@
     let loading = false;
 
     onMount(() => {
+        console.log(data)
         const urlParams = new URLSearchParams(window.location.search);
         token = urlParams.get('token');
         userID = urlParams.get('userID');
@@ -39,10 +40,11 @@
                 sendToast("You've successfully joined the family!")
                 window.location.href = "/dashboard/families"
             } else {
-                sendToast("Failed to accept the invitation", 'error')
                 throw new Error("Failed to accept the invitation");
             }
         } catch (e) {
+            loading = false
+            sendToast("Failed to accept the invitation", e.message)
             errorMessage = e.message;
         }
     }
