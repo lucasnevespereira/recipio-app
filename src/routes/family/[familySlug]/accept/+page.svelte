@@ -7,7 +7,6 @@
     export let data;
     let userID;
     let token;
-    let accepted = false;
     let errorMessage = "";
     let loading = false;
 
@@ -17,7 +16,7 @@
         userID = urlParams.get('userID');
 
         if (!token || !userID) {
-            errorMessage = "Token or userID missing in the URL";
+            sendToast('Token or userID missing in the URL', 'error')
         }
     });
 
@@ -25,22 +24,16 @@
         loading = true;
         try {
             if (token === data.family.invite_token) {
-                const res = await pb.collection('users').getFirstListItem(`id="${userID}"`)
-                const user = structuredClone(res)
-                await pb
-                    .collection('users')
-                    .authWithPassword(user.email, user.password)
 
                 // remove user id from pending_members
-                data.family.pending_members = data.family.pending_members.filter(id => id !== user.id);
-                data.family.members.push(user.id);
+                data.family.pending_members = data.family.pending_members.filter(id => id !== userID);
+                data.family.members.push(userID);
 
                 await pb.collection('families').update(data.family.id, {
                     "members": data.family.members,
                     "pending_members": data.family.pending_members
                 });
 
-                accepted = true;
                 loading = false;
                 sendToast("You've successfully joined the family!")
                 window.location.href = "/dashboard/families"
@@ -50,7 +43,6 @@
         } catch (e) {
             loading = false
             sendToast(e.message, 'error')
-            errorMessage = e.message;
         }
     }
 </script>
@@ -58,7 +50,6 @@
 <div class="min-h-fit flex items-center justify-center p-20">
     <div class="rounded-lg shadow-md p-6 w-full max-w-md">
         <h1 class="text-2xl text-center font-semibold mb-4">Accept {data.family.name} Invitation</h1>
-
 
         {#if loading}
             <div class="flex justify-center items-center py-2 px-4 rounded-full w-full">
