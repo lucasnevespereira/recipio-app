@@ -1,4 +1,5 @@
 <script lang="ts">
+    import {enhance} from '$app/forms'
     import {error} from '@sveltejs/kit';
     import {pb} from '$lib/pocketbase';
     import {sendToast} from "$lib/utils/toast";
@@ -6,6 +7,7 @@
     import {ArrowLeft, Icon} from "svelte-hero-icons";
     import RichEditor from "$lib/components/RichEditor/RichEditor.svelte";
     import {SlideToggle} from "@skeletonlabs/skeleton";
+    import Spinner from "$lib/components/Spinner.svelte";
 
     export let data
     let familyName = '';
@@ -16,12 +18,14 @@
     let recipesMenuName = '';
     let aboutMenuName = ''
     let showAuthors = false
+    let loading;
 
     const toggleShowAuthors = () => {
         showAuthors = !showAuthors
     }
 
     const createFamily = async () => {
+        loading = true
         if (!data.user.id) {
             throw error("no user id");
         }
@@ -44,15 +48,18 @@
             });
         } catch (e) {
             console.log(e);
+            loading = false
             if (e.status && e.message) {
                 sendToast('Could not create family', 'error');
                 throw error(e.status, e.message);
             } else {
                 sendToast('Could not create family', 'error');
                 throw error(500, e.toString());
+
             }
         }
 
+        loading = false
         sendToast('Family Created');
         window.location.href = "/dashboard/families"
     };
@@ -66,7 +73,7 @@
     </a>
     <button type="button" on:click={createFamily} class="btn variant-filled">Create Family</button>
 </div>
-<div class="form-wrapper">
+<form method="POST" class="form-wrapper" use:enhance={createFamily}>
     <section class="form-section">
         <h2>Basic Information</h2>
         <div class="grid grid-cols-1 lg:grid-rows-1 lg:gap-6">
@@ -129,9 +136,15 @@
     </section>
 
     <div class="form-section-action">
-        <button type="button" on:click={createFamily} class="btn variant-filled">Create Family</button>
+        <button type="submit" class="btn variant-filled">Create Family</button>
     </div>
-</div>
+</form>
+
+{#if loading}
+    <div class="mx-auto">
+        <Spinner/>
+    </div>
+{/if}
 
 <style>
     .form-wrapper {

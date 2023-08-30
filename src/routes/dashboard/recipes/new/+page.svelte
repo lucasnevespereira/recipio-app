@@ -2,64 +2,63 @@
     import {FileDropzone, InputChip, ListBox, ListBoxItem} from '@skeletonlabs/skeleton';
     import RichEditor from '$lib/components/RichEditor/RichEditor.svelte';
     import {error} from '@sveltejs/kit';
-    import {pb, currentUser} from '$lib/pocketbase';
+    import {pb} from '$lib/pocketbase';
     import {sendToast} from "$lib/utils/toast";
     import {slugify} from "$lib/utils/text";
     import {ArrowLeft, Icon} from "svelte-hero-icons";
+    import Spinner from "$lib/components/Spinner.svelte";
 
-    export let data
+    export let data;
     let files: FileList;
     let title = '';
     let description = '';
     let ingredientsList: string[] = [];
     let instructions = '';
     let familiesList: string[] = [];
-
+    let loading;
 
     const createRecipe = async () => {
+        loading = true;
         if (!data.user.id) {
             throw error("no user id");
         }
-        let formData = new FormData();
-        formData.append('user_id', data.user.id);
-        formData.append('title', title);
-        formData.append('description', description);
-        formData.append('instructions', instructions);
-        formData.append('slug', slugify(title))
-
-        familiesList.forEach(family => {
-            formData.append("families", family);
-        });
-
-        const families = formData.getAll("families")
-        if (families.length === 0) {
-            formData.append("families", "")
-        }
-
-        const recipeIngredients = {};
-        ingredientsList.forEach((element, index) => {
-            recipeIngredients[index] = element;
-        });
-
-        formData.append('ingredients', JSON.stringify(recipeIngredients));
-
-        if (files && files.item(0)) {
-            formData.append('photo', files.item(0));
-        }
-
         try {
+            let formData = new FormData();
+            formData.append('user_id', data.user.id);
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('instructions', instructions);
+            formData.append('slug', slugify(title))
+
+            familiesList.forEach(family => {
+                formData.append("families", family);
+            });
+
+            const families = formData.getAll("families")
+            if (families.length === 0) {
+                formData.append("families", "")
+            }
+
+            const recipeIngredients = {};
+            ingredientsList.forEach((element, index) => {
+                recipeIngredients[index] = element;
+            });
+
+            formData.append('ingredients', JSON.stringify(recipeIngredients));
+
+            if (files && files.item(0)) {
+                formData.append('photo', files.item(0));
+            }
+
             await pb.collection('recipes').create(formData);
         } catch (e) {
-            console.log(e);
-            if (e.status && e.message) {
-                sendToast('Could not create recipe', 'error');
-                throw error(e.status, e.message);
-            } else {
-                sendToast('Could not create recipe', 'error');
-                throw error(500, e.toString());
-            }
+            console.error(e);
+            loading = false
+            sendToast('Could not create recipe', 'error');
+            throw error(e.status, e.message);
         }
 
+        loading = false;
         sendToast('Recipe Created');
         window.location.href = "/dashboard/recipes"
     };
@@ -147,8 +146,14 @@
         </section>
     {/if}
 
+
     <div class="form-section-action">
-        <button type="button" on:click={createRecipe} class="btn variant-filled">Create Recipe</button>
+        {#if loading}
+            <div class="mx-auto">
+                <Spinner/>
+            </div>
+        {/if}
+        <button on:click={createRecipe} class="btn variant-filled">Create Recipe</button>
     </div>
 </div>
 

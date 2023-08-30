@@ -138,13 +138,13 @@
             </div>
         </div>
     </section>
+    {#if data.families.length > 0}
+        <!-- Families Association Section -->
+        <section class="form-section">
+            <h2>Association</h2>
+            <div class="grid grid-cols-1 lg:grid-rows-1 lg:gap-6">
+                <div>
 
-    <!-- Families Association Section -->
-    <section class="form-section">
-        <h2>Association</h2>
-        <div class="grid grid-cols-1 lg:grid-rows-1 lg:gap-6">
-            <div>
-                {#if data.families.length > 0}
                     <label class="label mb-3">
                         <span>Add to Family</span>
                         <ListBox multiple>
@@ -154,10 +154,10 @@
                             {/each}
                         </ListBox>
                     </label>
-                {/if}
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    {/if}
 
     <div class="form-section-action">
         <button type="button" on:click={updateRecipe} class="btn variant-ghost-secondary">Save Recipe</button>
