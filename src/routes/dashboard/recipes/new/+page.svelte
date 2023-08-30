@@ -22,34 +22,36 @@
         if (!data.user.id) {
             throw error("no user id");
         }
-        try {
-            let formData = new FormData();
-            formData.append('user_id', data.user.id);
-            formData.append('title', title);
-            formData.append('description', description);
-            formData.append('instructions', instructions);
-            formData.append('slug', slugify(title))
+        let formData = new FormData();
+        formData.append('user_id', data.user.id);
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('instructions', instructions);
+        formData.append('slug', slugify(title))
 
+        if (familiesList.length > 0) {
             familiesList.forEach(family => {
                 formData.append("families", family);
             });
+        }
 
-            const families = formData.getAll("families")
-            if (families.length === 0) {
-                formData.append("families", "")
-            }
 
-            const recipeIngredients = {};
-            ingredientsList.forEach((element, index) => {
-                recipeIngredients[index] = element;
-            });
+        // const families = formData.getAll("families")
+        // if (families.length === 0) {
+        //     formData.append("families", "")
+        // }
 
-            formData.append('ingredients', JSON.stringify(recipeIngredients));
+        const recipeIngredients = {};
+        ingredientsList.forEach((element, index) => {
+            recipeIngredients[index] = element;
+        });
 
-            if (files && files.item(0)) {
-                formData.append('photo', files.item(0));
-            }
+        formData.append('ingredients', JSON.stringify(recipeIngredients));
 
+        if (files && files.item(0)) {
+            formData.append('photo', files.item(0));
+        }
+        try {
             await pb.collection('recipes').create(formData);
         } catch (e) {
             console.error(e);
