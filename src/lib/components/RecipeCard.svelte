@@ -22,7 +22,7 @@
         <div class="relative card card-hover hover:cursor-pointer w-64 sm:max-w-md md:max-w-lg">
             <img class="w-64 h-64 object-cover rounded-lg"
                  src={getImageURL(recipe?.collectionId, recipe?.id, recipe.photo)} alt={recipe.title}/>
-            <div class="absolute bottom-0 left-0 w-full bg-white bg-opacity-90 rounded-b-lg p-2">
+            <div class="absolute bottom-0 left-0 w-full bg-white bg-opacity-90 rounded-b-lg p-2 flex justify-center">
                 <p class="text-primary-90 text-center text-sm font-bold">{recipe.title}</p>
             </div>
         </div>
