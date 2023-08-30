@@ -1,8 +1,9 @@
 import {redirect} from "@sveltejs/kit";
 import {pb} from "$lib/pocketbase";
-import type {LayoutServerLoad} from "../../../../../../.svelte-kit/types/src/routes/family/[familySlug]/$types";
-
-export const load: LayoutServerLoad = async ({params}) => {
+import type {
+    PageLoad
+} from "../../../../../../.svelte-kit/types/src/routes/family/[familySlug]/recipes/[recipeSlug]/$types";
+export const load: PageLoad = async ({params}) => {
     if (params.recipeSlug === undefined) {
         throw redirect(303, `/family/${params.familySlug}`)
     }
