@@ -1,7 +1,5 @@
 <script lang="ts">
     import {Icon, PlusCircle, Share, UserCircle, Users} from "svelte-hero-icons";
-    import {onMount} from "svelte";
-
     let currentYear = new Date().getFullYear();
     export let data;
 </script>
