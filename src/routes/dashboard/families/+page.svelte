@@ -37,7 +37,6 @@
         }
     }
 
-    // Attach the event listener when the component mounts and remove it on destroy
     onMount(() => {
         window.addEventListener('click', handleOutsideClick);
     });

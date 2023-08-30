@@ -1,13 +1,15 @@
 <script>
     import {onMount} from 'svelte';
     import {pb} from "$lib/pocketbase/index";
+    import Spinner from "$lib/components/Spinner.svelte";
+    import {sendToast} from "$lib/utils/toast";
 
     export let data;
     let userID;
     let token;
     let accepted = false;
     let errorMessage = "";
-    let loading = false; // Added loading state
+    let loading = false;
 
     onMount(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -33,13 +35,15 @@
                 });
 
                 accepted = true;
+                loading = false;
+                sendToast("You've successfully joined the family!")
+                window.location.href = "/dashboard/families"
             } else {
+                sendToast("Failed to accept the invitation", 'error')
                 throw new Error("Failed to accept the invitation");
             }
-        } catch (error) {
-            errorMessage = error.message;
-        } finally {
-            loading = false;
+        } catch (e) {
+            errorMessage = e.message;
         }
     }
 </script>
@@ -48,46 +52,19 @@
     <div class="rounded-lg shadow-md p-6 w-full max-w-md">
         <h1 class="text-2xl text-center font-semibold mb-4">Accept {data.family.name} Invitation</h1>
 
-        {#if errorMessage}
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                <span class="block sm:inline">{errorMessage}</span>
-            </div>
-        {/if}
 
         {#if loading}
-            <div class="flex justify-center items-center py-2 px-4 rounded-full w-full bg-gray-300">
-                <div class="loader"></div>
+            <div class="flex justify-center items-center py-2 px-4 rounded-full w-full">
+                <Spinner/>
             </div>
-        {:else if !accepted}
-            <button
-                    on:click={acceptInvitation}
-                    class="bg-secondary-500 hover:bg-secondary-700 text-white font-bold py-2 px-4 rounded-full w-full"
-            >
-                Accept Invitation
-            </button>
-        {:else}
-            <p class="text-green-600 font-medium text-center">You've successfully joined the family!</p>
         {/if}
+
+        <button
+                disabled={loading}
+                on:click={acceptInvitation}
+                class="bg-secondary-500 hover:bg-secondary-700 text-white font-bold py-2 px-4 rounded-full w-full"
+        >
+            Accept Invitation
+        </button>
     </div>
 </div>
-
-<!-- Styles for the loader -->
-<style>
-    .loader {
-        border: 4px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        border-top: 4px solid black;
-        width: 24px;
-        height: 24px;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-</style>

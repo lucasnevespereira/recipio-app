@@ -66,7 +66,7 @@
                             on:click={() => inviteUser(user)}>Invite
                     </button>
                     <button class="text-red-500 bg-red-100 px-4 py-2 rounded hover:bg-red-200"
-                            on:click={() => removeUser(user)}>Remove
+                            on:click={() => removeUser(user)}>Cancel
                     </button>
                 </div>
             </li>
