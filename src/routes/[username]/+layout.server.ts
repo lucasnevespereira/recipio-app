@@ -1,6 +1,6 @@
-import type {LayoutServerLoad} from "../../../.svelte-kit/types/src/routes/$types";
 import {redirect} from "@sveltejs/kit";
 import {pb} from "$lib/pocketbase";
+import type {LayoutServerLoad} from "../../../.svelte-kit/types/src/routes/$types";
 
 export const load: LayoutServerLoad = async ({params}) => {
     if (params.username === undefined) {
@@ -9,7 +9,7 @@ export const load: LayoutServerLoad = async ({params}) => {
 
     try {
         const res = await pb.collection('users').getFirstListItem(`username="${params.username}"`)
-        const user = res.export()
+        const user = structuredClone(res)
         const recipes = structuredClone(await pb.collection("recipes").getFullList({
             sort: '-created',
             filter: `user_id = "${user.id}"`
