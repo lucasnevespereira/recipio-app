@@ -12,13 +12,12 @@
     let loading = false;
 
     onMount(() => {
-        console.log(data)
         const urlParams = new URLSearchParams(window.location.search);
         token = urlParams.get('token');
         userID = urlParams.get('userID');
 
         if (!token || !userID) {
-            errorMessage = "Token or user ID missing in the URL";
+            errorMessage = "Token or userID missing in the URL";
         }
     });
 
@@ -26,9 +25,15 @@
         loading = true;
         try {
             if (token === data.family.invite_token) {
+                const res = await pb.collection('users').getFirstListItem(`id="${userID}"`)
+                const user = structuredClone(res)
+                await pb
+                    .collection('users')
+                    .authWithPassword(user.email, user.password)
+
                 // remove user id from pending_members
-                data.family.pending_members = data.family.pending_members.filter(id => id !== userID);
-                data.family.members.push(userID);
+                data.family.pending_members = data.family.pending_members.filter(id => id !== user.id);
+                data.family.members.push(user.id);
 
                 await pb.collection('families').update(data.family.id, {
                     "members": data.family.members,
@@ -44,7 +49,7 @@
             }
         } catch (e) {
             loading = false
-            sendToast("Failed to accept the invitation", e.message)
+            sendToast(e.message, 'error')
             errorMessage = e.message;
         }
     }
