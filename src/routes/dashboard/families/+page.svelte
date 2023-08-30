@@ -119,22 +119,24 @@
         <a href={`/dashboard/families/${family.id}/members`}
            class="hidden md:flex flex-col items-center hover:cursor-pointer justify-start space-x-2">
             <div class="font-semibold text-primary hidden md:block mb-2">Members</div>
-            {#if family.expand.members && family.expand.members.length}
-                {#each family.expand.members.slice(0, 3) as member}
-                    <UserAvatar
-                            collectionId={member?.collectionId}
-                            userId={member?.id}
-                            avatar={member?.avatar}
-                            username={member.username}
-                            width="w-8"
-                    />
-                {/each}
-                {#if family.expand.members.length > 3}
-                    <div>+{family.expand.members.length - 3} more</div>
+            <div class="flex">
+                {#if family.expand.members && family.expand.members.length}
+                    {#each family.expand.members.slice(0, 3) as member}
+                        <UserAvatar
+                                collectionId={member?.collectionId}
+                                userId={member?.id}
+                                avatar={member?.avatar}
+                                username={member.username}
+                                width="w-8"
+                        />
+                    {/each}
+                    {#if family.expand.members.length > 3}
+                        <div>+{family.expand.members.length - 3} more</div>
+                    {/if}
+                {:else}
+                    <p>None</p>
                 {/if}
-            {:else}
-                <p>None</p>
-            {/if}
+            </div>
         </a>
 
         <!-- Creator column -->

@@ -7,7 +7,7 @@
     export let data;
     let userID;
     let token;
-    let errorMessage = "";
+    let accepted = false;
     let loading = false;
 
     onMount(() => {
@@ -34,9 +34,9 @@
                     "pending_members": data.family.pending_members
                 });
 
+                accepted = true
                 loading = false;
                 sendToast("You've successfully joined the family!")
-                window.location.href = "/dashboard/families"
             } else {
                 throw new Error("Failed to accept the invitation");
             }
@@ -57,12 +57,21 @@
             </div>
         {/if}
 
-        <button
-                disabled={loading}
-                on:click={acceptInvitation}
-                class="bg-secondary-500 hover:bg-secondary-700 text-white font-bold py-2 px-4 rounded-full w-full"
-        >
-            Accept Invitation
-        </button>
+        {#if !accepted}
+            <button
+                    disabled={loading}
+                    on:click={acceptInvitation}
+                    class="bg-secondary-500 hover:bg-secondary-700 text-white font-bold py-2 px-4 rounded-full w-full"
+            >
+                Accept Invitation
+            </button>
+        {:else}
+            <a
+                    href="/dashboard/families"
+                    class="bg-surface-500 hover:bg-surface-700 text-white font-bold py-2 px-4 rounded-full w-full"
+            >
+                Access Recipio Dashboard
+            </a>
+        {/if}
     </div>
 </div>
