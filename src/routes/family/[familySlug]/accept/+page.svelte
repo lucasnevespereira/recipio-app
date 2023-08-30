@@ -69,7 +69,8 @@
             <div class="flex justify-center mx-auto">
                 <a
                         href="/dashboard/families"
-                        class="bg-surface-500 hover:bg-surface-700 text-white font-bold py-2 px-4 rounded-full w-full"
+                        target="_blank"
+                        class="bg-surface-500 hover:bg-surface-700 text-white text-center mt-2 font-bold py-2 px-4 rounded-full"
                 >
                     Access Recipio Dashboard
                 </a>

@@ -54,7 +54,7 @@
     <AppShell slotSidebarLeft="w-0 md:w-52 bg-surface-500/10">
         <svelte:fragment slot="header">
             <AppBar background={isDashboard ? "bg-surface-200" : "bg-surface-200-opacity-50"}
-                    regionRowMain={!isDashboard && "absolute w-full px-10 py-4 bg-surface-filter-500 shadow-sm"}
+                    regionRowMain={!isDashboard && "absolute w-full px-4 md:px-10 py-4 bg-surface-filter-500 shadow-sm"}
                     padding={!isDashboard ? "p-0" : "p-4"}>
                 <svelte:fragment slot="lead">
                     {#if isDashboard}
