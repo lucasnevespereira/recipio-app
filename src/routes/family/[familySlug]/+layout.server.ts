@@ -4,7 +4,6 @@ import type {LayoutServerLoad} from "../../../../.svelte-kit/types/src/routes/$t
 
 export const load: LayoutServerLoad = async ({params}) => {
 
-    console.log("params family", params)
     if (params.familySlug === undefined) {
         throw redirect(303, '/')
     }

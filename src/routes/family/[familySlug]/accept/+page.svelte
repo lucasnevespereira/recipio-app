@@ -2,13 +2,13 @@
     import {onMount} from 'svelte';
     import {pb} from "$lib/pocketbase/index";
     import Spinner from "$lib/components/Spinner.svelte";
-    import {sendToast} from "$lib/utils/toast";
 
     export let data;
     let userID;
     let token;
     let accepted = false;
     let loading = false;
+    let errorMessage = "";
 
     onMount(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -16,7 +16,7 @@
         userID = urlParams.get('userID');
 
         if (!token || !userID) {
-            sendToast('Token or userID missing in the URL', 'error')
+            errorMessage = "Token or userID missing in the URL"
         }
     });
 
@@ -36,13 +36,12 @@
 
                 accepted = true
                 loading = false;
-                sendToast("You've successfully joined the family!")
             } else {
                 throw new Error("Failed to accept the invitation");
             }
         } catch (e) {
             loading = false
-            sendToast(e.message, 'error')
+            errorMessage = e.message;
         }
     }
 </script>
@@ -66,12 +65,20 @@
                 Accept Invitation
             </button>
         {:else}
-            <a
-                    href="/dashboard/families"
-                    class="bg-surface-500 hover:bg-surface-700 text-white font-bold py-2 px-4 rounded-full w-full"
-            >
-                Access Recipio Dashboard
-            </a>
+            <p class="text-green-600 font-medium text-center">You've successfully joined the family!</p>
+            <div class="flex justify-center mx-auto">
+                <a
+                        href="/dashboard/families"
+                        class="bg-surface-500 hover:bg-surface-700 text-white font-bold py-2 px-4 rounded-full w-full"
+                >
+                    Access Recipio Dashboard
+                </a>
+            </div>
+        {/if}
+        {#if errorMessage}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <span class="block sm:inline">{errorMessage}</span>
+            </div>
         {/if}
     </div>
 </div>

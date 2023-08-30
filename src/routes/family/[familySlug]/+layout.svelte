@@ -1,7 +1,6 @@
 <script>
     import Footer from "$lib/components/family/Footer.svelte";
     import Header from "$lib/components/family/Header.svelte";
-
     export let data;
 </script>
 

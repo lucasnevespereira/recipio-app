@@ -2,6 +2,7 @@
     import {Autocomplete} from '@skeletonlabs/skeleton';
     import type {AutocompleteOption} from '@skeletonlabs/skeleton';
     import {pb} from '$lib/pocketbase';
+    import {familyData} from "$lib/store/family";
 
     export let searchQuery = '';
     export let selectedMembers: AutocompleteOption[] = [];
@@ -20,13 +21,15 @@
                     sort: '-created',
                     filter: `username ~ "${searchQuery.toLowerCase()}"`,
                 });
-                membersOptions = response.map(member => (
-                    {
-                        label: member.username,
-                        value: member.id,
-                        meta: {email: member.email, avatar: member.avatar, collectionId: member.collectionId}
-                    }
-                ));
+                membersOptions = response
+                    .filter(member => !$familyData.members.includes(member.id) && !$familyData.pending_members.includes(member.id))
+                    .map(member => (
+                        {
+                            label: member.username,
+                            value: member.id,
+                            meta: {email: member.email, avatar: member.avatar, collectionId: member.collectionId}
+                        }
+                    ));
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
