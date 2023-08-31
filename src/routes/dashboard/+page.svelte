@@ -19,23 +19,23 @@
             </a>
         </div>
 
-        <div class="card p-4">
+        <a href="/dashboard/recipes" class="card p-4 hover:cursor-pointer">
             <p class="text-3xl font-bold">{data.recipes.length}</p>
             {#if data.recipes.length > 1}
                 <p>Recipes</p>
             {:else}
                 <p>Recipe</p>
             {/if}
-        </div>
+        </a>
 
-        <div class="card p-4">
+        <a  href="/dashboard/families" class="card p-4 hover:cursor-pointer">
             <p class="text-3xl font-bold">{data.families.length}</p>
             {#if data.families.length > 1}
                 <p>Families</p>
             {:else}
                 <p>Family</p>
             {/if}
-        </div>
+        </a>
     </div>
 </div>
 
