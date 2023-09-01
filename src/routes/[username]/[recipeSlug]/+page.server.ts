@@ -8,7 +8,7 @@ export const load: PageServerLoad = async ({params}) => {
     }
 
     try {
-        const recipe = structuredClone(await pb.collection('recipes').getFirstListItem(`slug="${params.recipeSlug}"`, {}));
+        const recipe = structuredClone(await pb.collection('recipes').getFirstListItem(`slug="${params.recipeSlug}" && private=false`, {}));
         return {
             recipe: recipe
         }

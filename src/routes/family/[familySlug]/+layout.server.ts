@@ -14,7 +14,7 @@ export const load: LayoutServerLoad = async ({params}) => {
 
         const recipes = await pb.collection('recipes').getFullList({
             sort: '-created',
-            filter: `families ~ "${family.id}"`,
+            filter: `families ~ "${family.id}" && private=false`,
         });
         return {
             family: family,

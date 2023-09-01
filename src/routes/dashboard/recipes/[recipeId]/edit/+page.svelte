@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {FileDropzone, InputChip, ListBox, ListBoxItem} from "@skeletonlabs/skeleton";
+    import {FileDropzone, InputChip, ListBox, ListBoxItem, SlideToggle} from "@skeletonlabs/skeleton";
     import RichEditor from "$lib/components/RichEditor/RichEditor.svelte";
     import {ArrowLeft, Icon} from "svelte-hero-icons";
     import {onMount} from "svelte";
@@ -10,6 +10,7 @@
     export let data;
     let files: FileList;
     let ingredientsTmpList = [];
+    let isPrivate = data.recipe.private
     let fileSizeError = "";
     const maxFileSize = 5242880;
 
@@ -19,6 +20,10 @@
             ingredientsTmpList = Object.values(data.recipe.ingredients);
         }
     });
+
+    const toggleIsPrivate = () => {
+        isPrivate = !isPrivate
+    }
 
     const checkFileSize = () => {
         if (files && files.item(0)) {
@@ -41,6 +46,7 @@
         formData.append("title", data.recipe.title)
         formData.append("description", data.recipe.description)
         formData.append("instructions", data.recipe.instructions)
+        formData.append('private', JSON.stringify(isPrivate))
 
         data.recipe.families.forEach(family => {
             formData.append("families", family);
@@ -65,6 +71,7 @@
         try {
             await pb.collection('recipes').update(data.recipe.id, formData);
             sendToast('Recipe Updated');
+            window.location.href = "/dashboard/recipes"
         } catch (e) {
             sendToast('Could not create recipe', 'error');
             console.error(e);
@@ -105,6 +112,14 @@
                             bind:value={data.recipe.description}
                             rows="4"
                             placeholder="Describe your recipe"></textarea>
+                </label>
+
+                <label class="label mb-3 flex flex-col">
+                    <span>Private</span>
+                    <SlideToggle name="private"
+                                 checked={isPrivate}
+                                 size="sm"
+                                 on:click={toggleIsPrivate}>{isPrivate ? "Yes" : "No"}</SlideToggle>
                 </label>
 
                 <label class="label mb-3">
