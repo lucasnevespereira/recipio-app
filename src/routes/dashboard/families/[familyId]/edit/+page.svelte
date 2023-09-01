@@ -33,6 +33,7 @@
         try {
             await pb.collection('families').update(data.family.id, formData);
             sendToast('Family Updated');
+            window.location.href = "/dashboard/families"
         } catch (e) {
             sendToast('Could not update family', 'error');
             console.error(e);
@@ -76,6 +77,7 @@
                 <label class="label mb-3 flex flex-col">
                     <span>Show Authors</span>
                     <SlideToggle name="show_authors"
+                                 checked={showAuthors}
                                  size="sm"
                                  on:click={toggleShowAuthors}>{showAuthors ? "Yes" : "No"}</SlideToggle>
                 </label>

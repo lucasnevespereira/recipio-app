@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {FileDropzone, InputChip, ListBox, ListBoxItem} from '@skeletonlabs/skeleton';
+    import {FileDropzone, InputChip, ListBox, ListBoxItem, SlideToggle} from '@skeletonlabs/skeleton';
     import RichEditor from '$lib/components/RichEditor/RichEditor.svelte';
     import {error} from '@sveltejs/kit';
     import {pb} from '$lib/pocketbase';
@@ -16,9 +16,13 @@
     let instructions = '';
     let familiesList: string[] = [];
     let loading;
+    let isPrivate = false
+
+    const toggleIsPrivate = () => {
+        isPrivate = !isPrivate
+    }
 
     let fileSizeError = "";
-
     const checkFileSize = () => {
         if (files && files.item(0)) {
             const fileSize = files.item(0).size;
@@ -43,18 +47,13 @@
         formData.append('description', description);
         formData.append('instructions', instructions);
         formData.append('slug', slugify(title))
+        formData.append('private', JSON.stringify(isPrivate))
 
         if (familiesList.length > 0) {
             familiesList.forEach(family => {
                 formData.append("families", family);
             });
         }
-
-
-        // const families = formData.getAll("families")
-        // if (families.length === 0) {
-        //     formData.append("families", "")
-        // }
 
         const recipeIngredients = {};
         ingredientsList.forEach((element, index) => {
@@ -107,6 +106,14 @@
                               placeholder="Describe your recipe"></textarea>
                 </label>
 
+
+                <label class="label mb-3 flex flex-col">
+                    <span>Private</span>
+                    <SlideToggle name="private"
+                                 size="sm"
+                                 on:click={toggleIsPrivate}>{isPrivate ? "Yes" : "No"}</SlideToggle>
+                </label>
+
                 <label class="label mb-3">
                     <span>Image</span>
                     <FileDropzone name="files" bind:files on:change={checkFileSize}>
@@ -146,6 +153,7 @@
             </div>
         </div>
     </section>
+
     {#if data.families.length > 0}
         <!-- Families Association Section -->
         <section class="form-section">

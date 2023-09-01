@@ -12,7 +12,7 @@ export const load: LayoutServerLoad = async ({params}) => {
         const user = structuredClone(res)
         const recipes = structuredClone(await pb.collection("recipes").getFullList({
             sort: '-created',
-            filter: `user_id = "${user.id}"`
+            filter: `user_id = "${user.id}" && private=false`
         }))
 
         return {
